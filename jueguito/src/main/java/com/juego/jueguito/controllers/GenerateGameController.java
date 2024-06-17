@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +18,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.juego.jueguito.dtos.Request;
 import com.juego.jueguito.dtos.Solution;
+import com.juego.jueguito.enums.Positions;
+import com.juego.jueguito.services.GameService;
 
 @RestController
 public class GenerateGameController {
 
     Logger log = LogManager.getLogger(GenerateGameController.class);
+
+    @Autowired
+    GameService gameService;
 
     @PostMapping("/generate")
     public ResponseEntity<String> generate(@RequestBody Request json) 
@@ -33,7 +39,7 @@ public class GenerateGameController {
             if ( checkRequest.getStatusCode() == HttpStatus.BAD_REQUEST ) {
               return checkRequest;
             }
-            return new ResponseEntity<>(positions().toString(), HttpStatus.OK);
+            return new ResponseEntity<>( String.valueOf( Positions.distance(Positions.A33, Positions.A11) ) , HttpStatus.OK);
         }
 
         private ResponseEntity<String> checkRequest(Request request) {
