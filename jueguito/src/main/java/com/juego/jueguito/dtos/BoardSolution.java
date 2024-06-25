@@ -33,11 +33,11 @@ public class BoardSolution {
     }
 
     public int value(int posX, int posY) {
-        return this.board[posX][posY];
+        return this.board[posX-1][posY-1];
     }
 
     public void setValue( int posX, int posY, int value) {
-        this.board[posX][posY] = value;
+        this.board[posX-1][posY-1] = value;
         hasChanged = true;
     }
 
@@ -130,6 +130,41 @@ public class BoardSolution {
     public int numberOfCombinations( Set set ) {
         return set.size();
     }
+
+    public void getAllSolutions(Set<int[][]> solutions) throws CloneNotSupportedException {
+
+        for ( int i = 0; i < this.getWidth(); i++ ) {
+            for ( int j = 0; j < this.getHeight(); j++ ) {
+
+                    int max = this.getMaximunNumber();
+                   
+                    BoardSolution currentSolution = this.clone();
+                    if ( currentSolution.value( i , j ) == 0 ) {
+                        currentSolution.setValue( i , j , max + 1 );
+                    
+                        if ( currentSolution.isComplete() ) {
+                            solutions.add( currentSolution.getBoard() );
+                        } else {
+                            this.getAllSolutions( solutions );
+                        }
+                    }
+            }
+        }
+    }
+
+
+    private int getMaximunNumber() {
+        int max = 0;
+        for ( int i = 0; i < this.getWidth(); i++ ) {
+            for ( int j = 0; j < this.getHeight(); j++ ) {
+                if ( this.value(i+1, j+1) > max ) {
+                    max = this.value(i+1, j+1);
+                }
+            }
+        }
+        return max;
+    }
+
 
     @Override
     public BoardSolution clone() throws CloneNotSupportedException {

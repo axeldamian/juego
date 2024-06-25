@@ -17,30 +17,9 @@ public class GameService {
     Logger log = LogManager.getLogger(GameService.class);
 
     public void generateGameNew() throws CloneNotSupportedException {
-        getAllSolutions(new HashSet<>(), new int[3][3]);
-    }
-
-    public void getAllSolutions(Set<int[][]> solutions, int[][] prefixMatrix) throws CloneNotSupportedException {
-
-        BoardSolution board = new BoardSolution(prefixMatrix);
-
-        for ( int i = 0; i < board.getWidth(); i++ ) {
-            for ( int j = 0; j < board.getHeight(); j++ ) {
-
-                    int max = getMaximunNumber( prefixMatrix );
-                   
-                    BoardSolution currentSolution = board.clone();
-                    if ( currentSolution.value( i , j ) == 0 ) {
-                        currentSolution.setValue( i , j , max + 1 );
-                    
-                        if ( currentSolution.isComplete() ) {
-                            solutions.add( currentSolution.getBoard() );
-                        } else {
-                            getAllSolutions( solutions, currentSolution.getBoard() );
-                        }
-                    }
-            }
-        }
+        BoardSolution game = new BoardSolution(new int[3][3]);
+        HashSet<int[][]> solutions = new HashSet<>();
+        game.getAllSolutions(solutions);
     }
 
     private String printMatrix(int[][] matrix) {
@@ -58,18 +37,6 @@ public class GameService {
         for(int[][] item : list) {
             log.info(printMatrix(item));
         }
-    }
-
-    private int getMaximunNumber(int[][] currentSolution) {
-        int max = 0;
-        for ( int i = 0; i < currentSolution[0].length; i++ ) {
-            for ( int j = 0; j < currentSolution.length; j++ ) {
-                if ( currentSolution[i][j] > max ) {
-                    max = currentSolution[i][j];
-                }
-            }
-        }
-        return max;
     }
 
     private Set<Position> getNeighbors(Position currentPos, BoardSolution board) {
