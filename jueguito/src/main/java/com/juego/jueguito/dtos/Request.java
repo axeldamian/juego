@@ -8,9 +8,15 @@ public class Request {
 
     private String difficulty;
 
-    public Request(int symbolsQuantity, String difficulty){
+    private int height;
+
+    private int width;
+
+    public Request(int symbolsQuantity, String difficulty, int height, int width){
         this.symbolsQuantity = symbolsQuantity;
         this.difficulty = difficulty;
+        this.height = height;
+        this.width = width;
     }
 
     public String getDifficulty(){
@@ -20,6 +26,14 @@ public class Request {
     @JsonGetter("symbols_quantity")
     public int getSymbolsQuantity(){
         return this.symbolsQuantity;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public int getWidth() {
+        return this.width;
     }
 
 }

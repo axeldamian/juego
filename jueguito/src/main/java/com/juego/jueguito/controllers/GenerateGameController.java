@@ -11,15 +11,18 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.juego.jueguito.dtos.Position;
 import com.juego.jueguito.dtos.Request;
-import com.juego.jueguito.dtos.Solution;
-import com.juego.jueguito.enums.Positions;
+import com.juego.jueguito.enums.Difficulty;
 import com.juego.jueguito.services.GameService;
+
+
 
 @RestController
 public class GenerateGameController {
@@ -39,7 +42,33 @@ public class GenerateGameController {
             if ( checkRequest.getStatusCode() == HttpStatus.BAD_REQUEST ) {
               return checkRequest;
             }
-            return new ResponseEntity<>( String.valueOf( Positions.distance(Positions.A33, Positions.A11) ) , HttpStatus.OK);
+
+
+            //BoardSolution board = new BoardSolution(GameService.APossibleSolution())
+            //board.getAllValidPositions();
+            return new ResponseEntity<>( String.valueOf( Position.distance( new Position(2,1), new Position(1,1) )) , HttpStatus.OK);
+        }
+
+        @GetMapping("/b")
+        public int getMethodName() throws CloneNotSupportedException {
+          int[][] matrix = new int[3][3];
+          GameService board = new GameService();
+          HashSet<int[][]> solutions = new HashSet<>();
+          board.getAllSolutions( solutions , matrix );
+          return solutions.size();
+        }
+        
+
+        @GetMapping("/a")
+        public ResponseEntity<String> solutions() throws CloneNotSupportedException {
+          int[][] matrix = new int[3][3];
+          HashSet<int[][]> solutions = new HashSet<>();
+          String response = "";
+          gameService.getAllSolutions( solutions , matrix);
+          for ( int[][] solution : solutions ) {
+            response = response + Arrays.deepToString(solution);
+          }
+          return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
         private ResponseEntity<String> checkRequest(Request request) {
@@ -58,13 +87,8 @@ public class GenerateGameController {
              return new ResponseEntity<>("no there are a difficulty or symbols_quantity field", HttpStatus.BAD_REQUEST);
             }
 
-          HashSet<String> words = new HashSet<String>();
-          words.add("HARD");
-          words.add("MEDIUM");
-          words.add("HARD");
-
-          if ( !words.contains( request.getDifficulty() ) ) {
-            return new ResponseEntity<>("difficulty is invalid, null or not exist", HttpStatus.BAD_REQUEST);
+          if ( !Difficulty.getPossibilities().contains(request.getDifficulty() ) ) {
+            return new ResponseEntity<>("difficulty is not easy, medium or hard", HttpStatus.BAD_REQUEST);
           }
 
           if ( request.getSymbolsQuantity() <= 0 ) {
@@ -76,13 +100,6 @@ public class GenerateGameController {
           }
 
           return new ResponseEntity<>("request valid", HttpStatus.OK);
-        }
-
-        private List<Solution> positions(){
-          Solution s = new Solution();
-          List<Solution> l = new ArrayList<>();
-          l.add(s);
-          return l;
         }
 
 }
