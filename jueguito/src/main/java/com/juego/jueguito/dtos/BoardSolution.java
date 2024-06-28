@@ -166,7 +166,7 @@ public class BoardSolution {
         return this.isComplete() && this.isSolution();
     }
 
-    public void getAllSolutions(BoardSolution currentSolution) throws CloneNotSupportedException {
+    public void getAllSolutions(BoardSolution currentSolution, HashSet<int[][]> solutionSet) throws CloneNotSupportedException {
 
         //StopWatch stopWatch = new StopWatch();
         //stopWatch.start();
@@ -178,20 +178,20 @@ public class BoardSolution {
                     
                    // if ( currentSolution.getCurrentPositionWidth() != i &&
                     //    currentSolution.getCurrentPositionHeight() != j ) {
+                        BoardSolution newBoard = new BoardSolution(currentSolution.getBoard());
+                        newBoard.setCurrentPosition(i, j);
 
-                        currentSolution.setCurrentPosition(i, j);
-
-                        if ( currentSolution.currentValueIsZero() ) {
-                            log.info("a");
-                            currentSolution.setNextIncrementalValue();
+                        if ( newBoard.currentValueIsZero() ) {
+                            //og.info("a");
+                            newBoard.setNextIncrementalValue();
                     
-                            log.info("aa");
-                            if ( currentSolution.checkValidSolution() ) {
-                                log.info("b");
-                                this.solutions.add( currentSolution.getBoard() );
+                            //log.info("aa");
+                            if ( newBoard.checkValidSolution() ) {
+                                //log.info("b");
+                                solutionSet.add( newBoard.getBoard() );
                             } else {
-                                log.info("c");
-                                currentSolution.getAllSolutions(currentSolution);
+                                //log.info("c");
+                                currentSolution.getAllSolutions( newBoard , solutionSet);
                             }
                         }
             }

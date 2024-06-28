@@ -3,6 +3,7 @@ package com.juego.jueguito.controllers;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -54,8 +55,10 @@ public class GenerateGameController {
           int[][] matrix = new int[3][3];
           BoardSolution board = new BoardSolution(matrix);
 
-          board.getAllSolutions(board);
-          return board.allSolutions().size();
+          HashSet<int[][]> solutionSet = new HashSet<>();
+
+          board.getAllSolutions( board , solutionSet );
+          return solutionSet.size();
         }
         
 
@@ -64,19 +67,21 @@ public class GenerateGameController {
           int[][] matrix = new int[2][2];
           BoardSolution board = new BoardSolution(matrix);
 
+          HashSet<int[][]> solutionSet = new HashSet<>();
+
           String response = "";
 
-          board.getAllSolutions(board);
+          board.getAllSolutions(board , solutionSet );
 
-          log.info( board.allSolutions().size() );
-          for ( int[][] it : board.allSolutions() ) {
+          log.info( solutionSet.size() );
+          for ( int[][] it : solutionSet ) {
             log.info("values");
             log.info( it );
           }
-          /*
-          for ( int[][] solution : solutions ) {
+          
+          for ( int[][] solution : solutionSet ) {
             response = response + Arrays.deepToString(solution);
-          }*/
+          }
 
           return new ResponseEntity<>(response, HttpStatus.OK);
         }
