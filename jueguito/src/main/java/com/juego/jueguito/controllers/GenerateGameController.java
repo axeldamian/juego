@@ -3,7 +3,6 @@ package com.juego.jueguito.controllers;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.juego.jueguito.dtos.BoardSolution;
 import com.juego.jueguito.dtos.Position;
 import com.juego.jueguito.dtos.Request;
 import com.juego.jueguito.enums.Difficulty;
@@ -52,22 +52,32 @@ public class GenerateGameController {
         @GetMapping("/b")
         public int getMethodName() throws CloneNotSupportedException {
           int[][] matrix = new int[3][3];
-          GameService board = new GameService();
-          HashSet<int[][]> solutions = new HashSet<>();
-          board.getAllSolutions( solutions , matrix );
-          return solutions.size();
+          BoardSolution board = new BoardSolution(matrix);
+
+          board.getAllSolutions(board);
+          return board.allSolutions().size();
         }
         
 
         @GetMapping("/a")
         public ResponseEntity<String> solutions() throws CloneNotSupportedException {
-          int[][] matrix = new int[3][3];
-          HashSet<int[][]> solutions = new HashSet<>();
+          int[][] matrix = new int[2][2];
+          BoardSolution board = new BoardSolution(matrix);
+
           String response = "";
-          gameService.getAllSolutions( solutions , matrix);
+
+          board.getAllSolutions(board);
+
+          log.info( board.allSolutions().size() );
+          for ( int[][] it : board.allSolutions() ) {
+            log.info("values");
+            log.info( it );
+          }
+          /*
           for ( int[][] solution : solutions ) {
             response = response + Arrays.deepToString(solution);
-          }
+          }*/
+
           return new ResponseEntity<>(response, HttpStatus.OK);
         }
 

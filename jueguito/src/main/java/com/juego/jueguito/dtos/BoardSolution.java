@@ -1,5 +1,6 @@
 package com.juego.jueguito.dtos;
 
+import java.awt.Dimension;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,50 +13,79 @@ public class BoardSolution {
 
     private int[][] board;
 
-    private boolean hasChanged;
+    private HashSet<int[][]> solutions = new HashSet<>();
+
+    private Dimension position = new Dimension();
+
+    private int[][] pivotMatrix = new int[2][2];
 
     public BoardSolution(int[][] board) {
         super();
         this.board = cloneMatrix(board);
-        hasChanged = false;
+        this.pivotMatrix = new int[board[0].length][board.length];
+    }
+
+    public Set<int[][]> allSolutions() {
+        return this.solutions;
     }
 
     public int[][] getBoard() {
         return this.board;
     }
 
-    public int getHeight() {
-        return this.board.length;
+    public Dimension getCurrentPosition() {
+        return this.position;
     }
 
-    public int getWidth() {
+    public void setCurrentPosition(int posX , int posY) {
+        this.position = new Dimension(posX , posY);
+    }
+
+    public int getBoardWidth() {
         return this.board[0].length;
     }
 
-    public int value(int posX, int posY) {
-        return this.board[posX-1][posY-1];
+    public int getBoardHeight() {
+        return this.board.length;
     }
 
-    public void setValue( int posX, int posY, int value) {
-        this.board[posX-1][posY-1] = value;
-        hasChanged = true;
+    public int getCurrentPositionHeight() {
+        return (int) this.position.getHeight();
+    }
+
+    public int getCurrentPositionWidth() {
+        return (int) this.position.getWidth();
+    }
+
+    // input is position + 1
+    public int value(int posX, int posY) {
+        return this.board[posX - 1][posY - 1];
+    }
+
+    public boolean currentValueIsZero() {
+        int value = this.value(getCurrentPositionWidth(), getCurrentPositionHeight());
+        return value == 0;
+    }
+
+    public void setValue( int value ) {
+        int currentHeight = this.getCurrentPositionHeight();
+        int currentWidth = this.getCurrentPositionWidth();
+        this.board[currentWidth - 1][currentHeight - 1] = value;
     }
 
     public boolean isSquare() {
-        return (this.getHeight() == this.getWidth() ) ;
+        return (this.getBoardHeight() == this.getBoardWidth() ) ;
     }
 
     public boolean isRectangle() {
-        return ( this.getHeight() != this.getWidth() );
+        return ( this.getBoardHeight() != this.getBoardWidth() );
     }
 
     public int valueMax() {
-        return this.getHeight() * getWidth();
-    }
-    public boolean hasChanged() {
-        return hasChanged;
+        return this.getBoardHeight() * getBoardWidth();
     }
 
+    // TODO : ver el parametro matriz.
     private int[][] cloneMatrix( int[][] matrix ) {
         int[][] newMatrix = new int[matrix[0].length][matrix.length];
         for ( int i = 0; i < matrix[0].length; i++ ) {
@@ -67,10 +97,10 @@ public class BoardSolution {
     }
 
     public Set<Position> getAllValidPositions() {
-        Set<Position> pos = new HashSet<Position> ();
-        for (int i = 1 ; i <= this.getHeight(); i++) {
-            for (int j = 1; j <= this.getWidth(); j++) {
-                pos.add(new Position(i, j) );
+        Set<Position> pos = new HashSet<> ();
+        for ( int i = 0 ; i <= this.getBoardHeight(); i++ ) {
+            for ( int j = 0; j <= this.getBoardWidth(); j++ ) {
+                pos.add(new Position( i + 1, j + 1 ) );
             }
         }
         return pos;
@@ -79,8 +109,8 @@ public class BoardSolution {
     public Set<Integer> possibleSolutionsValues() {
         HashSet<Integer> set = new HashSet<>();
         int h = 1;
-        for ( int i = 0; i < this.getWidth(); i++) {
-            for ( int j = 0; j < this.getHeight(); j++) {
+        for ( int i = 0; i < this.getBoardWidth(); i++) {
+            for ( int j = 0; j < this.getBoardHeight(); j++) {
                 set.add(h);
                 h++;
             }
@@ -89,9 +119,10 @@ public class BoardSolution {
     }
 
     public void fillMatrix(int[][] matrix) {
-        for ( int i = 0; i < this.getWidth(); i++ ) {
-            for ( int j = 0; j < this.getHeight(); j++ ) {
-                board[i][j] = matrix[i][j];
+        for ( int i = 0; i < this.getBoardWidth(); i++ ) {
+            for ( int j = 0; j < this.getBoardHeight(); j++ ) {
+                // Arrays.copyOf(matrix[i] , matrix[i].lenght);
+                this.board[i][j] = matrix[i][j];
             }
         }
     }
@@ -105,10 +136,10 @@ public class BoardSolution {
             values.add(x);
         }
 
-        for ( int i = 0; i < this.getWidth(); i++ ) {
-            for ( int j = 0; j < this.getHeight(); j++ ) {
-                values.add( this.value(i,j) );
-                if ( this.value(i,j) == 0 ) {
+        for ( int i = 0; i < this.getBoardWidth(); i++ ) {
+            for ( int j = 0; j < this.getBoardHeight(); j++ ) {
+                values.add( this.value(i + 1 , j + 1 ) );
+                if ( this.value( i + 1 ,j + 1 ) == 0 ) {
                     return false;
                 }
             }
@@ -117,9 +148,9 @@ public class BoardSolution {
     }
 
     public boolean isComplete() {
-        for ( int i = 0; i < this.getWidth(); i++ ) {
-            for ( int j = 0; j < this.getHeight(); j++) {
-                if ( this.value(i,j) == 0 ) {
+        for ( int i = 0; i < this.getBoardWidth(); i++ ) {
+            for ( int j = 0; j < this.getBoardHeight(); j++) {
+                if ( this.value( i + 1 , j + 1 ) == 0 ) {
                     return false;
                 }
             }
@@ -127,38 +158,60 @@ public class BoardSolution {
         return true;
     }
 
-    public int numberOfCombinations( Set set ) {
+    public int numberOfCombinations( Set<int[][]> set ) {
         return set.size();
     }
 
-    public void getAllSolutions(Set<int[][]> solutions) throws CloneNotSupportedException {
-
-        for ( int i = 0; i < this.getWidth(); i++ ) {
-            for ( int j = 0; j < this.getHeight(); j++ ) {
-
-                    int max = this.getMaximunNumber();
-                   
-                    BoardSolution currentSolution = this.clone();
-                    if ( currentSolution.value( i , j ) == 0 ) {
-                        currentSolution.setValue( i , j , max + 1 );
-                    
-                        if ( currentSolution.isComplete() ) {
-                            solutions.add( currentSolution.getBoard() );
-                        } else {
-                            this.getAllSolutions( solutions );
-                        }
-                    }
-            }
-        }
+    private boolean checkValidSolution() {
+        return this.isComplete() && this.isSolution();
     }
 
+    public void getAllSolutions(BoardSolution currentSolution) throws CloneNotSupportedException {
+
+        //StopWatch stopWatch = new StopWatch();
+        //stopWatch.start();
+
+        for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
+            for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
+
+                    //BoardSolution currentSolution = new BoardSolution(this.pivotMatrix);
+                    
+                   // if ( currentSolution.getCurrentPositionWidth() != i &&
+                    //    currentSolution.getCurrentPositionHeight() != j ) {
+
+                        currentSolution.setCurrentPosition(i, j);
+
+                        if ( currentSolution.currentValueIsZero() ) {
+                            log.info("a");
+                            currentSolution.setNextIncrementalValue();
+                    
+                            log.info("aa");
+                            if ( currentSolution.checkValidSolution() ) {
+                                log.info("b");
+                                this.solutions.add( currentSolution.getBoard() );
+                            } else {
+                                log.info("c");
+                                currentSolution.getAllSolutions(currentSolution);
+                            }
+                        }
+            }
+        }
+
+        //stopWatch.stop();
+        //System.out.println("Elapsed Time in minutes: " + stopWatch.getTotalTime(TimeUnit.MILLISECONDS) );
+    }
+
+    private void setNextIncrementalValue() {
+        log.info( getMaximunNumber() );
+        this.setValue( getMaximunNumber() + 1 );
+    }
 
     private int getMaximunNumber() {
         int max = 0;
-        for ( int i = 0; i < this.getWidth(); i++ ) {
-            for ( int j = 0; j < this.getHeight(); j++ ) {
-                if ( this.value(i+1, j+1) > max ) {
-                    max = this.value(i+1, j+1);
+        for ( int i = 0; i < this.getBoardWidth(); i++ ) {
+            for ( int j = 0; j < this.getBoardHeight(); j++ ) {
+                if ( this.board[ i ][ j ]  > max ) {
+                    max = this.board[i][j];
                 }
             }
         }
@@ -168,22 +221,22 @@ public class BoardSolution {
 
     @Override
     public BoardSolution clone() throws CloneNotSupportedException {
-        int[][] newMatrix = new int[this.getWidth()][this.getHeight()];
+        int[][] newMatrix = new int[this.pivotMatrix[0].length][this.pivotMatrix.length];
         BoardSolution newBoard = new BoardSolution(newMatrix);
-        newBoard.fillMatrix(this.board);
+        newBoard.fillMatrix(this.pivotMatrix);
         return newBoard;
     }
 
     @Override
     public String toString() {
-        String boardString = "\n";
-        for ( int i = 0; i < this.getWidth(); i++ ) {
-            for ( int j = 0; j < this.getHeight(); j++) {
-                boardString = boardString + " " + this.getBoard()[i][j];
+        StringBuilder boardString = new StringBuilder("\n");
+        for ( int i = 0; i < this.getBoardWidth(); i++ ) {
+            for ( int j = 0; j < this.getBoardHeight(); j++) {
+                boardString = boardString.append( " " + this.getBoard()[i][j] );
             }
-            boardString = boardString + "\n";
+            boardString = boardString.append( "\n" );
         }
-        return boardString;
+        return boardString.toString();
     }
     
 }
