@@ -58,7 +58,7 @@ public class GenerateGameController {
           HashSet<int[][]> solutionSet = new HashSet<>();
 
           board.getAllSolutions( board , solutionSet );
-          return solutionSet.size();
+          return solutionSet.size(); // is size()! factorial.
         }
         
 

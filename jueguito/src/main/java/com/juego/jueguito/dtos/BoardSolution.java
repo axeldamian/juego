@@ -22,7 +22,7 @@ public class BoardSolution {
     public BoardSolution(int[][] board) {
         super();
         this.board = cloneMatrix(board);
-        this.pivotMatrix = new int[board[0].length][board.length];
+        this.pivotMatrix = new int[board[0].length][board.length]; // matrix of 0's of size board.
     }
 
     public Set<int[][]> allSolutions() {
