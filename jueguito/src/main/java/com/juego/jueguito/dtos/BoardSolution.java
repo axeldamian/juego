@@ -3,9 +3,11 @@ package com.juego.jueguito.dtos;
 import java.awt.Dimension;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.util.StopWatch;
 
 public class BoardSolution {
 
@@ -17,13 +19,10 @@ public class BoardSolution {
 
     private Dimension position = new Dimension();
 
-    private int[][] pivotMatrix = new int[2][2];
-
     public BoardSolution(int[][] board) {
         super();
         this.board = cloneMatrix(board);
-        this.pivotMatrix = new int[board[0].length][board.length]; // matrix of 0's of size board.
-    }
+     }
 
     public Set<int[][]> allSolutions() {
         return this.solutions;
@@ -57,7 +56,6 @@ public class BoardSolution {
         return (int) this.position.getWidth();
     }
 
-    // input is position + 1
     public int value(int posX, int posY) {
         return this.board[posX - 1][posY - 1];
     }
@@ -127,14 +125,9 @@ public class BoardSolution {
         }
     }
 
-
     public boolean isSolution() {
 
-        HashSet<Integer> values = new HashSet<>();
-        
-        for (int x = 1; x < this.valueMax(); x++) {
-            values.add(x);
-        }
+        Set<Integer> values = this.possibleSolutionsValues();
 
         for ( int i = 0; i < this.getBoardWidth(); i++ ) {
             for ( int j = 0; j < this.getBoardHeight(); j++ ) {
@@ -144,7 +137,7 @@ public class BoardSolution {
                 }
             }
         }
-        return values.size() == 9;
+        return values.size() == ( this.getBoardWidth() * this.getBoardHeight() );
     }
 
     public boolean isComplete() {
@@ -166,43 +159,46 @@ public class BoardSolution {
         return this.isComplete() && this.isSolution();
     }
 
-    public void getAllSolutions(BoardSolution currentSolution, HashSet<int[][]> solutionSet) throws CloneNotSupportedException {
+    public Set<int[][]> getAllSolutions() throws CloneNotSupportedException {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
 
-        //StopWatch stopWatch = new StopWatch();
-        //stopWatch.start();
+        HashSet<int[][]> solutionSet = new HashSet<>();
+
+        this.calculateAllSolutions( solutionSet );
+
+        stopWatch.stop();
+
+        double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
+        String msg = String.format( "tiempo %.5f ms", time );
+        log.info(msg);
+
+        return solutionSet;
+    }
+
+    private void calculateAllSolutions(HashSet<int[][]> solutionSet) throws CloneNotSupportedException {
 
         for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
             for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
 
-                    //BoardSolution currentSolution = new BoardSolution(this.pivotMatrix);
-                    
-                   // if ( currentSolution.getCurrentPositionWidth() != i &&
-                    //    currentSolution.getCurrentPositionHeight() != j ) {
-                        BoardSolution newBoard = new BoardSolution(currentSolution.getBoard());
+                        BoardSolution newBoard = new BoardSolution(this.getBoard());
                         newBoard.setCurrentPosition(i, j);
 
                         if ( newBoard.currentValueIsZero() ) {
-                            //og.info("a");
                             newBoard.setNextIncrementalValue();
                     
-                            //log.info("aa");
                             if ( newBoard.checkValidSolution() ) {
-                                //log.info("b");
                                 solutionSet.add( newBoard.getBoard() );
+                                return;
                             } else {
-                                //log.info("c");
-                                currentSolution.getAllSolutions( newBoard , solutionSet);
+                                newBoard.calculateAllSolutions(solutionSet);
                             }
                         }
             }
         }
-
-        //stopWatch.stop();
-        //System.out.println("Elapsed Time in minutes: " + stopWatch.getTotalTime(TimeUnit.MILLISECONDS) );
     }
 
     private void setNextIncrementalValue() {
-        log.info( getMaximunNumber() );
         this.setValue( getMaximunNumber() + 1 );
     }
 
@@ -216,15 +212,6 @@ public class BoardSolution {
             }
         }
         return max;
-    }
-
-
-    @Override
-    public BoardSolution clone() throws CloneNotSupportedException {
-        int[][] newMatrix = new int[this.pivotMatrix[0].length][this.pivotMatrix.length];
-        BoardSolution newBoard = new BoardSolution(newMatrix);
-        newBoard.fillMatrix(this.pivotMatrix);
-        return newBoard;
     }
 
     @Override

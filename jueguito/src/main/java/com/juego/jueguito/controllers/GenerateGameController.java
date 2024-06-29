@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,12 +53,13 @@ public class GenerateGameController {
 
         @GetMapping("/b")
         public int getMethodName() throws CloneNotSupportedException {
-          int[][] matrix = new int[3][3];
+          int[][] matrix = new int[2][2];
           BoardSolution board = new BoardSolution(matrix);
 
-          HashSet<int[][]> solutionSet = new HashSet<>();
+          Set<int[][]> solutionSet = new HashSet<>();
 
-          board.getAllSolutions( board , solutionSet );
+          solutionSet = board.getAllSolutions();
+          
           return solutionSet.size(); // is size()! factorial.
         }
         
@@ -67,11 +69,11 @@ public class GenerateGameController {
           int[][] matrix = new int[2][2];
           BoardSolution board = new BoardSolution(matrix);
 
-          HashSet<int[][]> solutionSet = new HashSet<>();
+          Set<int[][]> solutionSet = new HashSet<>();
 
           String response = "";
 
-          board.getAllSolutions(board , solutionSet );
+          solutionSet = board.getAllSolutions();
 
           log.info( solutionSet.size() );
           for ( int[][] it : solutionSet ) {

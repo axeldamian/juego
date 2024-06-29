@@ -18,8 +18,7 @@ public class GameService {
 
     public void generateGameNew() throws CloneNotSupportedException {
         BoardSolution game = new BoardSolution(new int[3][3]);
-        HashSet<int[][]> solutionSet = new HashSet<>();
-        game.getAllSolutions( game, solutionSet );
+        game.getAllSolutions( );
     }
 
     private String printMatrix(int[][] matrix) {
