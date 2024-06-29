@@ -34,7 +34,7 @@ public class BoardSolution {
         return this.board;
     }
 
-    public int[][] getASolution() {
+    public String getASolution() {
 
         // generate a random number 
         Random rndm = new Random(); 
@@ -50,7 +50,7 @@ public class BoardSolution {
             result = setIterator.next();
         }
 
-       return result;
+       return new BoardSolution(result).toString();
     }
 
     public Dimension getCurrentPosition() {

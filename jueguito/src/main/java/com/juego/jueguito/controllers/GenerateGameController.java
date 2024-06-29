@@ -52,8 +52,8 @@ public class GenerateGameController {
         }
 
         @GetMapping("/b")
-        public int[][] getMethodName() throws CloneNotSupportedException {
-          
+        public String getMethodName() throws CloneNotSupportedException {
+
           int[][] matrix = new int[2][2];
           BoardSolution board = new BoardSolution(matrix);
 
