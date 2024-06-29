@@ -2,6 +2,8 @@ package com.juego.jueguito.dtos;
 
 import java.awt.Dimension;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +32,25 @@ public class BoardSolution {
 
     public int[][] getBoard() {
         return this.board;
+    }
+
+    public int[][] getASolution() {
+
+        // generate a random number 
+        Random rndm = new Random(); 
+
+        Iterator<int[][]> setIterator = this.solutions.iterator();
+
+        int rndmNumber = rndm.nextInt(this.solutions.size()); 
+
+        int cont = 0;
+        int[][] result = null;
+
+        while(setIterator.hasNext() && cont < rndmNumber){
+            result = setIterator.next();
+        }
+
+       return result;
     }
 
     public Dimension getCurrentPosition() {
@@ -160,6 +181,7 @@ public class BoardSolution {
     }
 
     public Set<int[][]> getAllSolutions() throws CloneNotSupportedException {
+        
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
@@ -170,8 +192,10 @@ public class BoardSolution {
         stopWatch.stop();
 
         double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
-        String msg = String.format( "tiempo %.5f ms", time );
+        String msg = String.format( "tiempo %.2f ms", time );
         log.info(msg);
+
+        this.solutions = solutionSet;
 
         return solutionSet;
     }

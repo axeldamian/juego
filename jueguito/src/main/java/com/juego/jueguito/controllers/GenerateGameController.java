@@ -52,15 +52,14 @@ public class GenerateGameController {
         }
 
         @GetMapping("/b")
-        public int getMethodName() throws CloneNotSupportedException {
+        public int[][] getMethodName() throws CloneNotSupportedException {
+          
           int[][] matrix = new int[2][2];
           BoardSolution board = new BoardSolution(matrix);
 
-          Set<int[][]> solutionSet = new HashSet<>();
+          board.getAllSolutions();
 
-          solutionSet = board.getAllSolutions();
-          
-          return solutionSet.size(); // is size()! factorial.
+          return board.getASolution();
         }
         
 
@@ -74,12 +73,6 @@ public class GenerateGameController {
           String response = "";
 
           solutionSet = board.getAllSolutions();
-
-          log.info( solutionSet.size() );
-          for ( int[][] it : solutionSet ) {
-            log.info("values");
-            log.info( it );
-          }
           
           for ( int[][] solution : solutionSet ) {
             response = response + Arrays.deepToString(solution);
