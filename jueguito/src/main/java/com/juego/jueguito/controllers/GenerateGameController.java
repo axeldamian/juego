@@ -3,15 +3,16 @@ package com.juego.jueguito.controllers;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,20 +52,27 @@ public class GenerateGameController {
             return new ResponseEntity<>( String.valueOf( Position.distance( new Position(2,1), new Position(1,1) )) , HttpStatus.OK);
         }
 
-        @GetMapping("/b")
+        @GetMapping("/generate-solution")
         public String getMethodName() throws CloneNotSupportedException {
 
           int[][] matrix = new int[3][3];
+
+         StopWatch stopWatch = new StopWatch();
+         stopWatch.start();
+
           if ( boardSolution == null) { // save the matrix and not recalculate.
             boardSolution = new BoardSolution(matrix);
           }
 
-          if ( boardSolution.getCalculatedSolutions().size() == 0 ) {
-            Set<int[][]> solutions = boardSolution.getAllSolutions();
+          if ( boardSolution.getCalculatedSolutions().isEmpty()) {
+            Set<int[][]> solutions = boardSolution.getAllSolutions(); // algoritmo principal.
             boardSolution.setCalculateAllSolutions(solutions);
-            boardSolution.solutions = solutions;
-            log.info(solutions);
           }
+
+          stopWatch.stop();
+          double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
+          String msg = String.format( "tiempo %.2f ms", time );
+          log.info(msg);
 
           return boardSolution.getRandomSolution();
         }
@@ -75,11 +83,9 @@ public class GenerateGameController {
           int[][] matrix = new int[2][2];
           BoardSolution board = new BoardSolution(matrix);
 
-          Set<int[][]> solutionSet = new HashSet<>();
-
           String response = "";
 
-          solutionSet = board.getAllSolutions();
+          Set<int[][]> solutionSet = board.getAllSolutions();
           
           for ( int[][] solution : solutionSet ) {
             response = response + Arrays.deepToString(solution);

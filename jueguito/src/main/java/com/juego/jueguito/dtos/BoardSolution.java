@@ -5,11 +5,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.util.StopWatch;
 
 
 public class BoardSolution {
@@ -256,18 +254,9 @@ public class BoardSolution {
 
     public Set<int[][]> getAllSolutions() throws CloneNotSupportedException {
         
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
         HashSet<int[][]> solutionSet = new HashSet<>();
 
         this.calculateAllSolutions( solutionSet );
-
-        stopWatch.stop();
-
-        double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
-        String msg = String.format( "tiempo %.2f ms", time );
-        log.info(msg);
 
         return solutionSet;
     }
