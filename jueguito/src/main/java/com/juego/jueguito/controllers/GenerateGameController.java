@@ -24,8 +24,6 @@ import com.juego.jueguito.dtos.Request;
 import com.juego.jueguito.enums.Difficulty;
 import com.juego.jueguito.services.GameService;
 
-
-
 @RestController
 public class GenerateGameController {
 
@@ -33,6 +31,8 @@ public class GenerateGameController {
 
     @Autowired
     GameService gameService;
+
+    BoardSolution boardSolution;
 
     @PostMapping("/generate")
     public ResponseEntity<String> generate(@RequestBody Request json) 
@@ -54,12 +54,19 @@ public class GenerateGameController {
         @GetMapping("/b")
         public String getMethodName() throws CloneNotSupportedException {
 
-          int[][] matrix = new int[2][2];
-          BoardSolution board = new BoardSolution(matrix);
+          int[][] matrix = new int[3][3];
+          if ( boardSolution == null) { // save the matrix and not recalculate.
+            boardSolution = new BoardSolution(matrix);
+          }
 
-          board.getAllSolutions();
+          if ( boardSolution.getCalculatedSolutions().size() == 0 ) {
+            Set<int[][]> solutions = boardSolution.getAllSolutions();
+            boardSolution.setCalculateAllSolutions(solutions);
+            boardSolution.solutions = solutions;
+            log.info(solutions);
+          }
 
-          return board.getASolution();
+          return boardSolution.getRandomSolution();
         }
         
 
