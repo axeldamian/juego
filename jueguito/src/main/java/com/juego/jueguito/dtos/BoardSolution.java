@@ -202,39 +202,6 @@ public class BoardSolution {
         return 0 < posEje && posEje <= dimension;
     }
 
-    public Set<Position> getBoardCorners() {
-        HashSet<Position> result = new HashSet<>();
-
-        if ( isValid( 1 , this.getBoardWidth() ) && isValid( 1 , this.getBoardHeight())) {
-            result.add( new Position( 1, 1 ) );// top left.
-        }
-        result.add( new Position( this.getBoardHeight(), 1) );// bottom left.
-        result.add( new Position( 1 , this.getBoardWidth() ) );// top right.
-        result.add( new Position( this.getBoardHeight() , this.getBoardWidth()) );// bottom right.
-
-        return result;
-    }
-
-    private Set<Position> getborders() {
-
-        HashSet<Position> borders = new HashSet<>();
-
-        for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
-            Position border1 = new Position( 1 , i );
-            Position border2 = new Position( this.getBoardWidth() , i );
-            borders.add(border1);
-            borders.add(border2);
-        }
-
-        for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
-            Position border3 = new Position( j , 1 );
-            Position border4 = new Position( j , this.getBoardHeight() );
-            borders.add(border3);
-            borders.add(border4);
-        }
-        return borders;
-    }
-
     public boolean isComplete() {
         for ( int i = 0; i < this.getBoardWidth(); i++ ) {
             for ( int j = 0; j < this.getBoardHeight(); j++) {

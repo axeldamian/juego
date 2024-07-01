@@ -64,8 +64,62 @@ public class Position {
                );
     }
 
-    private Set<Position> getExtremesIfIsValid() {
+    private Set<Position> getBorders( int width , int height ) {
         HashSet<Position> result = new HashSet<>();
+
+        if ( isValid( 1 , this.getBoardWidth() ) && isValid( 1 , this.getBoardHeight())) {
+            result.add( new Position( 1, 1 ) );// top left.
+        }
+        result.add( new Position( this.getBoardHeight(), 1) );// bottom left.
+        result.add( new Position( 1 , this.getBoardWidth() ) );// top right.
+        result.add( new Position( this.getBoardHeight() , this.getBoardWidth()) );// bottom right.
+
+        return result;
+    }
+
+    private Set<Position> getborders( int width , int height ) {
+
+        HashSet<Position> borders = new HashSet<>();
+
+        for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
+            Position border1 = new Position( 1 , i );
+            Position border2 = new Position( this.getBoardWidth() , i );
+            borders.add(border1);
+            borders.add(border2);
+        }
+
+        for ( int j = 1; j <= height; j++ ) {
+            Position border3 = new Position( j , 1 );
+            Position border4 = new Position( j , height );
+            borders.add(border3);
+            borders.add(border4);
+        }
+        return borders;
+
+    }
+
+    private Set<Position> getExtremesIfIsValid( Set borders, int width , int height ) {
+        HashSet<Position> result = new HashSet<>();
+
+        if ( borders.contains(this) ) {
+
+            if ( this.getPositionX() == 1 ) {
+                result.add( new Position( width , this.getPositionY() ) );
+            }
+
+            if ( this.getPositionX() == width ) {
+                result.add( new Position( width , this.getPositionY() ) );
+            }
+
+            if ( this.getPositionY() == 1 ) {
+                result.add( new Position( this.getPositionX() , height) );
+            }
+
+            if ( this.getPositionY() == height ) {
+                result.add( new Position( this.getPositionX() , 1 ) );
+            }
+
+        }
         return result;
     }
 
