@@ -202,10 +202,12 @@ public class BoardSolution {
         return 0 < posEje && posEje <= dimension;
     }
 
-    public Set<Position> getDiagonals() {
+    public Set<Position> getBoardCorners() {
         HashSet<Position> result = new HashSet<>();
 
-        result.add( new Position( 1, 1 ) );// top left.
+        if ( isValid( 1 , this.getBoardWidth() ) && isValid( 1 , this.getBoardHeight())) {
+            result.add( new Position( 1, 1 ) );// top left.
+        }
         result.add( new Position( this.getBoardHeight(), 1) );// bottom left.
         result.add( new Position( 1 , this.getBoardWidth() ) );// top right.
         result.add( new Position( this.getBoardHeight() , this.getBoardWidth()) );// bottom right.

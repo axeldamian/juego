@@ -71,7 +71,7 @@ public class GenerateGameController {
 
           stopWatch.stop();
           double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
-          String msg = String.format( "tiempo %.2f ms", time );
+          String msg = String.format( "tiempo en calcular una solución %.2f ms", time );
           log.info(msg);
 
           return boardSolution.getRandomSolution();

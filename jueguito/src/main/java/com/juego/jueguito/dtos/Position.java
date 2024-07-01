@@ -40,7 +40,7 @@ public class Position {
         return b; // >=
     }
 
-    public static int max(int[][] matrix) {
+    public static int max (int[][] matrix) {
         int max = 0 ;
         for ( int i = 0; i < matrix[i].length; i++ ) {
             for ( int j = 0; j < matrix.length; j++ ) {
@@ -64,20 +64,20 @@ public class Position {
                );
     }
 
+    private Set<Position> getExtremesIfIsValid() {
+        HashSet<Position> result = new HashSet<>();
+        return result;
+    }
+
     public Set<Position> getNextPossibilities( Position pos , int width , int height) {
         Set<Position> result = new HashSet<>();
 
-        for ( int i = 1; i <= height; i++) {
-            for ( int j = 1; j <= width; j++) {
-                Position newPos = new Position(i, j);
-                if (  Position.distance(pos, newPos) <= 1 ) {
-                    result.add(newPos);
-                }
-            }
-        }
+            Position newPos = new Position(i, j);
+            newPos.addIfIsValid(result, width, height);
+    
 
-        result.removeAll( pos.getDiagonalsValid(width, height) );
-        result.remove(pos);
+        //result.removeAll( pos.getDiagonalsValid(width, height) );
+        //result.remove(pos);
         return result;
     }
 
@@ -86,8 +86,25 @@ public class Position {
             set.add( this );
         }
     }
+    
+    private Set<Position> getNeighbors( int width , int height ) {
 
-    public Set<Position> getDiagonalsValid( int width , int height) {
+        HashSet<Position> positions = new HashSet<>();
+
+        for ( int i = 1; i <= width; i++ ) {
+            for ( int j = 1; j <= height; j++ ) {
+                Position pos = new Position(i, j);
+                if ( Position.distance(this, pos) == 1 ) {
+                    positions.add(pos);
+                }
+            }
+        }
+
+        positions.removeAll( this.getDiagonals(width, height) );
+        return positions;
+    }
+
+    public Set<Position> getDiagonals( int width , int height) {
         HashSet<Position> result = new HashSet<>();
 
         Position topLeft = new Position( this.getPositionX() - 1 , this.getPositionY() - 1 );
