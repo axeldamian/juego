@@ -58,47 +58,50 @@ public class Position {
         this.positionY = posY;
     }
 
+
+    public Set<Position> getNextPossibilities( int width , int height) {
+        
+        Set<Position> result = new HashSet<>();
+
+        Set<Position> neighbors = this.getNeighbors(width, height);
+
+        Set<Position> borders = Position.getBorders(width, height);
+
+        Set<Position> extremes = this.getExtremesIfIsValid( borders , width , height);
+
+        result.addAll(neighbors);
+        result.addAll(extremes);
+        return result;
+    }
+
     public boolean isValid(int width , int height) {
         return ( 1 <= this.getPositionX() && this.getPositionX() <= height &&
                  1 <= this.getPositionY() && this.getPositionY() <= width
                );
     }
 
-    private Set<Position> getBorders( int width , int height ) {
-        HashSet<Position> result = new HashSet<>();
+    public static Set<Position> getBorders( int width , int height ) {
 
-        if ( isValid( 1 , this.getBoardWidth() ) && isValid( 1 , this.getBoardHeight())) {
-            result.add( new Position( 1, 1 ) );// top left.
-        }
-        result.add( new Position( this.getBoardHeight(), 1) );// bottom left.
-        result.add( new Position( 1 , this.getBoardWidth() ) );// top right.
-        result.add( new Position( this.getBoardHeight() , this.getBoardWidth()) );// bottom right.
+        HashSet<Position> borders = new HashSet<Position>();
 
-        return result;
-    }
-
-    private Set<Position> getborders( int width , int height ) {
-
-        HashSet<Position> borders = new HashSet<>();
-
-        for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
-            Position border1 = new Position( 1 , i );
-            Position border2 = new Position( this.getBoardWidth() , i );
+        for ( int i = 1; i <= width; i++ ) {
+            Position border1 = new Position( 1 , i ); // top
+            Position border2 = new Position( width , i ); // bottom
             borders.add(border1);
             borders.add(border2);
         }
 
         for ( int j = 1; j <= height; j++ ) {
-            Position border3 = new Position( j , 1 );
-            Position border4 = new Position( j , height );
+            Position border3 = new Position( j , 1 ); // left
+            Position border4 = new Position( j , height ); // right
             borders.add(border3);
             borders.add(border4);
         }
-        return borders;
 
+        return borders;
     }
 
-    private Set<Position> getExtremesIfIsValid( Set borders, int width , int height ) {
+    public Set<Position> getExtremesIfIsValid( Set<Position> borders, int width , int height ) {
         HashSet<Position> result = new HashSet<>();
 
         if ( borders.contains(this) ) {
@@ -120,18 +123,6 @@ public class Position {
             }
 
         }
-        return result;
-    }
-
-    public Set<Position> getNextPossibilities( Position pos , int width , int height) {
-        Set<Position> result = new HashSet<>();
-
-            Position newPos = new Position(i, j);
-            newPos.addIfIsValid(result, width, height);
-    
-
-        //result.removeAll( pos.getDiagonalsValid(width, height) );
-        //result.remove(pos);
         return result;
     }
 
@@ -177,6 +168,33 @@ public class Position {
     @Override
     public String toString() {
         return " [" + this.positionX + "," + this.positionY + "] ";
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.positionX * 10) + this.positionY;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if ( this == o ) {
+		    return true;
+        }
+
+	    if ( o == null ) {
+		    return false;
+        }
+
+	    if ( this.getClass() != o.getClass() ) {
+		    return false;
+        }
+
+	    Position other = (Position) o;
+        if ( this.positionX == other.getPositionX() && this.positionY == other.getPositionY() ) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -166,10 +166,13 @@ public class BoardSolution {
                 }
             }
         }
-        return ( values.size() == ( this.getBoardWidth() * this.getBoardHeight() ) ) && this.matrixWithNextsValuesValid();
+        return ( values.size() == ( this.getBoardWidth() * this.getBoardHeight() ) ) 
+        && this.matrixWithNextsValuesValid() && this.nextPossibilitiesIsOk();
     }
 
     private boolean matrixWithNextsValuesValid() {
+
+        Dimension currentPosition = this.getCurrentPosition();
 
         for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
             for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
@@ -184,7 +187,7 @@ public class BoardSolution {
             }
         }
 
-        this.setCurrentPosition(1, 1);
+        this.setCurrentPosition( (int) currentPosition.getWidth() , (int) currentPosition.getHeight());
         return true;
     }
 
@@ -198,8 +201,27 @@ public class BoardSolution {
         return -1;
     }
 
-    private boolean isValid(int posEje, int dimension) {
-        return 0 < posEje && posEje <= dimension;
+    private boolean nextPossibilitiesIsOk() {
+        boolean result = true;
+        for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
+            for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
+                Position pos = new Position(i, j);
+                result = result && currentPositionIsValid(pos);
+                
+            }
+        }
+        return result;
+    }
+
+    private boolean currentPositionIsValid(Position pos) {
+        Set<Position> nextPossibilities = pos.getNextPossibilities( this.getBoardWidth(), this.getBoardHeight());
+        int currentValue = this.board[pos.getPositionX() - 1][pos.getPositionY() - 1];
+        for ( Position p : nextPossibilities ) {
+            if ( ( currentValue + 1 ) == this.board[p.getPositionX() - 1][p.getPositionY() - 1] ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isComplete() {
