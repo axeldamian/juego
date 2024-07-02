@@ -171,29 +171,28 @@ public class BoardSolution {
     }
 
     private boolean matrixWithNextsValuesValid() {
-
-        Dimension currentPosition = this.getCurrentPosition();
+        //Dimension currentPosition = this.getCurrentPosition();
 
         for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
             for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
 
-                this.setCurrentPosition(i, j);
+                //this.setCurrentPosition(i, j);
 
-                boolean predicated = ( this.value(j, i) != 0 ) || ( this.value(i , j) == 9 ) || nextValue() == ( this.value(i, j) + 1  );
+                boolean predicated = ( this.getBoard()[i - 1][j - 1] == 0 ) || ( this.getBoard()[i - 1][j - 1] > 9 ); //|| nextValue(i,j) == ( this.getBoard()[i][j] + 1  );
 
-                if ( !predicated ) {
+                if ( predicated ) {
                     return false;
                 }
             }
         }
 
-        this.setCurrentPosition( (int) currentPosition.getWidth() , (int) currentPosition.getHeight());
+        //this.setCurrentPosition( (int) currentPosition.getWidth() , (int) currentPosition.getHeight());
         return true;
     }
 
-    private int nextValue() {
+    private int nextValue( int currentWidth , int currentHeight) {
 
-        int currentValue = this.board[this.getCurrentPositionWidth()][this.getCurrentPositionHeight()];
+        int currentValue = this.board[currentWidth][currentHeight];
 
        if ( 0 <= currentValue && currentValue < 9 ) {
         return currentValue + 1;
@@ -217,7 +216,7 @@ public class BoardSolution {
         Set<Position> nextPossibilities = pos.getNextPossibilities( this.getBoardWidth(), this.getBoardHeight());
         int currentValue = this.board[pos.getPositionX() - 1][pos.getPositionY() - 1];
         for ( Position p : nextPossibilities ) {
-            if ( ( currentValue + 1 ) == this.board[p.getPositionX() - 1][p.getPositionY() - 1] ) {
+            if ( currentValue == 9 || ( currentValue + 1 ) == this.board[p.getPositionX() - 1][p.getPositionY() - 1] ) {
                 return true;
             }
         }
