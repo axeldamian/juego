@@ -52,8 +52,33 @@ public class GenerateGameController {
             return new ResponseEntity<>( String.valueOf( Position.distance( new Position(2,1), new Position(1,1) )) , HttpStatus.OK);
         }
 
+        @GetMapping("/cardinal-solutions")
+        public int getCardinal() throws CloneNotSupportedException {
+
+          int[][] matrix = new int[3][3];
+
+         StopWatch stopWatch = new StopWatch();
+         stopWatch.start();
+
+          if ( boardSolution == null) { // save the matrix and not recalculate.
+            boardSolution = new BoardSolution(matrix);
+          }
+
+          if ( boardSolution.getCalculatedSolutions().isEmpty()) {
+            Set<int[][]> solutions = boardSolution.getAllSolutions(); // algoritmo principal.
+            boardSolution.setCalculateAllSolutions(solutions);
+          }
+
+          stopWatch.stop();
+          double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
+          String msg = String.format( "tiempo en calcular una solución %.2f ms", time );
+          log.info(msg);
+
+          return boardSolution.getCalculatedSolutions().size();
+        }
+
         @GetMapping("/generate-solution")
-        public String getMethodName() throws CloneNotSupportedException {
+        public String getASolution() throws CloneNotSupportedException {
 
           int[][] matrix = new int[3][3];
 
