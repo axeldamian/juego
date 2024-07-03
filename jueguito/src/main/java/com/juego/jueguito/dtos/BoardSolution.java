@@ -112,6 +112,18 @@ public class BoardSolution {
         return this.getBoardHeight() * getBoardWidth();
     }
 
+    public Position searchByValue( int value ) {
+        for ( int i = 0; i < this.getBoardWidth(); i++ ) {
+            for ( int j = 0; j < this.getBoardHeight(); j++ ) {
+                if ( this.board[i][j] == value ) {
+                    Position p = new Position(i , j);
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
     // TODO : ver el parametro matriz.
     private int[][] cloneMatrix( int[][] matrix ) {
         int[][] newMatrix = new int[matrix[0].length][matrix.length];

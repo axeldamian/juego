@@ -46,6 +46,28 @@ public class GenerateGameController {
               return checkRequest;
             }
 
+            int[][] matrix = new int[3][3];
+
+            StopWatch stopWatch = new StopWatch();
+            stopWatch.start();
+   
+             if ( boardSolution == null) { // save the matrix and not recalculate.
+               boardSolution = new BoardSolution(matrix);
+             }
+   
+             if ( boardSolution.getCalculatedSolutions().isEmpty() ) {
+               Set<int[][]> solutions = boardSolution.getAllSolutions(); // algoritmo principal.
+               boardSolution.setCalculateAllSolutions(solutions);
+             }
+   
+             stopWatch.stop();
+             double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
+             String msg = String.format( "tiempo en calcular una solución %.2f ms", time );
+             log.info(msg);
+   
+             return GameBoard( boardSolution.getRandomSolution() );
+          
+
 
             //BoardSolution board = new BoardSolution(GameService.APossibleSolution())
             //board.getAllValidPositions();
@@ -102,23 +124,6 @@ public class GenerateGameController {
           return boardSolution.getRandomSolution();
         }
         
-
-        @GetMapping("/a")
-        public ResponseEntity<String> solutions() throws CloneNotSupportedException {
-          int[][] matrix = new int[2][2];
-          BoardSolution board = new BoardSolution(matrix);
-
-          String response = "";
-
-          Set<int[][]> solutionSet = board.getAllSolutions();
-          
-          for ( int[][] solution : solutionSet ) {
-            response = response + Arrays.deepToString(solution);
-          }
-
-          return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-
         private ResponseEntity<String> checkRequest(Request request) {
           
           List<String> properties = new ArrayList<String>();
