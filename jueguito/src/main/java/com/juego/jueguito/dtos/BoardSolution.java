@@ -218,7 +218,6 @@ public class BoardSolution {
             for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
                 Position pos = new Position(i, j);
                 result = result && currentPositionIsValid(pos);
-                
             }
         }
         return result;

@@ -1,8 +1,13 @@
 package com.juego.jueguito.dtos;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.juego.jueguito.enums.Symbol;
 
 public class GameBoard {
+
+    static Logger log = LogManager.getLogger(GameBoard.class);
 
     private Symbol[][] board;
 
@@ -23,12 +28,12 @@ public class GameBoard {
     }
 
     public GameBoard(BoardSolution solution) {
-        this.super();
 
         this.width = solution.getBoardWidth();
         this.height = solution.getBoardHeight();
         this.board = new Symbol[solution.getBoardWidth()][solution.getBoardHeight()];
         Symbol currentSymbol = Symbol.getRandomSymbol();
+        log.info("current symbol is " + currentSymbol );
 
         for ( int i = 0; i < width; i++ ) {
             for ( int j = 0; j < height; j++ ) {

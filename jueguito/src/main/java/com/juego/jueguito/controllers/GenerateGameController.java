@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,16 +33,16 @@ public class GenerateGameController {
 
     BoardSolution boardSolution;
 
-    @PostMapping("/generate")
-    public ResponseEntity<String> generate(@RequestBody Request json) 
-		throws ResponseStatusException {
+    @GetMapping("/generate")
+    public ResponseEntity<String> generate() throws ResponseStatusException, CloneNotSupportedException {
        
             log.info("call to endpoint /generate");
 
+            /*
             ResponseEntity<String> checkRequest = checkRequest(json);
             if ( checkRequest.getStatusCode() == HttpStatus.BAD_REQUEST ) {
               return checkRequest;
-            }
+            }*/
 
             int[][] matrix = new int[3][3];
 

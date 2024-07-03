@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public enum Symbol {
 
     TRIANGLE_RED( Color.RED , Shape.TRIANGLE ),
@@ -22,6 +25,8 @@ public enum Symbol {
     SQUARE_YELLOW( Color.YELLOW , Shape.SQUARE ),
     SQUARE_PINK( Color.PINK , Shape.SQUARE ),
     SQUARE_VIOLET( Color.VIOLET , Shape.SQUARE );
+
+    static Logger log = LogManager.getLogger( Symbol.class );
 
     private Color color;
 
@@ -68,10 +73,10 @@ public enum Symbol {
     public static Symbol getRandomSymbol() {
         Iterator<Symbol> symbols = getAllEnums().iterator();
         int cont = 1; // ver si es 0
-        Symbol symbol = null;
+        Symbol symbol = Symbol.CIRCLE_BLUE; // is random
         int randomNumber = new Random().nextInt( 15 ); // ver si es 14
 
-        while ( symbols.hasNext() && cont < randomNumber ) {
+        while ( symbols.hasNext() && cont <= randomNumber ) {
             symbol = symbols.next();
             cont ++;
         }
@@ -81,12 +86,14 @@ public enum Symbol {
     public Symbol getRandomNextSymbol() {
         Symbol symbolRandom = Symbol.getRandomSymbol();
         Iterator<Symbol> nextPossibility = symbolRandom.getNextPossibilities().iterator();
-        Symbol nextSymbol = null;
+        Symbol nextSymbol = Symbol.TRIANGLE_RED;
         int cardinalNextPossibilities = symbolRandom.getNextPossibilities().size();
+        
         int randomNumber = new Random().nextInt( cardinalNextPossibilities ); // ver si va -1
+    
         int cont = 1;
 
-        while( nextPossibility.hasNext() && cont < randomNumber ) {
+        while( nextPossibility.hasNext() && cont <= randomNumber ) {
             nextSymbol = nextPossibility.next();
             cont++;
         }
@@ -95,8 +102,9 @@ public enum Symbol {
 
     public Set<Symbol> getNextPossibilities() {
         HashSet<Symbol> result = new HashSet<>();
+        Set<Symbol> symbols = Symbol.getAllEnums();
 
-        for ( Symbol s : Symbol.getAllEnums() ) {
+        for ( Symbol s : symbols ) {
             if ( this.getColor().getId() == s.getColor().getId() ) {
                 result.add(s);
             }
