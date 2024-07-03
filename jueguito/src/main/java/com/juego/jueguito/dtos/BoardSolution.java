@@ -41,7 +41,7 @@ public class BoardSolution {
         return this.board;
     }
 
-    public String getRandomSolution() {
+    public BoardSolution getRandomSolution() {
 
         // generate a random number
         Random rndm = new Random();
@@ -58,7 +58,7 @@ public class BoardSolution {
             cont++;
         }
 
-       return new BoardSolution(result).toString();
+       return new BoardSolution(result);
     }
 
     public Dimension getCurrentPosition() {

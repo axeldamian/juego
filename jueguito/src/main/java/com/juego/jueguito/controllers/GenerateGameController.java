@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.juego.jueguito.dtos.BoardSolution;
-import com.juego.jueguito.dtos.Position;
+import com.juego.jueguito.dtos.GameBoard;
 import com.juego.jueguito.dtos.Request;
 import com.juego.jueguito.enums.Difficulty;
 import com.juego.jueguito.services.GameService;
@@ -64,14 +64,15 @@ public class GenerateGameController {
              double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
              String msg = String.format( "tiempo en calcular una solución %.2f ms", time );
              log.info(msg);
+
+             GameBoard gb = new GameBoard( boardSolution.getRandomSolution() );
    
-             return GameBoard( boardSolution.getRandomSolution() );
-          
+             return new ResponseEntity<>( gb.toString(), HttpStatus.OK);
+        
 
 
             //BoardSolution board = new BoardSolution(GameService.APossibleSolution())
             //board.getAllValidPositions();
-            return new ResponseEntity<>( String.valueOf( Position.distance( new Position(2,1), new Position(1,1) )) , HttpStatus.OK);
         }
 
         @GetMapping("/cardinal-solutions")
@@ -121,7 +122,7 @@ public class GenerateGameController {
           String msg = String.format( "tiempo en calcular una solución %.2f ms", time );
           log.info(msg);
 
-          return boardSolution.getRandomSolution();
+          return boardSolution.getRandomSolution().toString();
         }
         
         private ResponseEntity<String> checkRequest(Request request) {
