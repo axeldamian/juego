@@ -48,12 +48,16 @@ public class BoardSolution {
 
         Iterator<int[][]> setIterator = this.solutions.iterator();
 
-        int rndmNumber = rndm.nextInt(this.solutions.size());
+        int rndmNumber = 0;
+
+        if ( !this.solutions.isEmpty() ) {
+            rndmNumber = rndm.nextInt(this.solutions.size());
+        }
 
         int cont = 0;
-        int[][] result = null;
+        int[][] result = new int[this.getBoardWidth()][this.getBoardHeight()];
 
-        while(setIterator.hasNext() && cont < rndmNumber){
+        while( cont < rndmNumber && setIterator.hasNext() ){
             result = setIterator.next();
             cont++;
         }
@@ -178,8 +182,8 @@ public class BoardSolution {
                 }
             }
         }
-        return ( values.size() == ( this.getBoardWidth() * this.getBoardHeight() ) ) 
-        && this.matrixWithNextsValuesValid() && this.nextPossibilitiesIsOk();
+        return ( values.size() == ( this.getBoardWidth() * this.getBoardHeight() ) ) &&
+         this.matrixWithNextsValuesValid() && this.nextPossibilitiesIsOk();
     }
 
     private boolean matrixWithNextsValuesValid() {
@@ -218,6 +222,7 @@ public class BoardSolution {
             for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
                 Position pos = new Position(i, j);
                 result = result && currentPositionIsValid(pos);
+                
             }
         }
         return result;
@@ -289,7 +294,7 @@ public class BoardSolution {
     }
 
     private int getMaximunNumber() {
-        int max = 0;
+        int max = 1;
         for ( int i = 0; i < this.getBoardWidth(); i++ ) {
             for ( int j = 0; j < this.getBoardHeight(); j++ ) {
                 if ( this.board[ i ][ j ]  > max ) {
@@ -304,7 +309,7 @@ public class BoardSolution {
     public String toString() {
         StringBuilder boardString = new StringBuilder("\n");
         for ( int i = 0; i < this.getBoardWidth(); i++ ) {
-            for ( int j = 0; j < this.getBoardHeight(); j++) {
+            for ( int j = 0; j < this.getBoardHeight(); j++ ) {
                 boardString = boardString.append( " " + this.getBoard()[i][j] );
             }
             boardString = boardString.append( "\n" );

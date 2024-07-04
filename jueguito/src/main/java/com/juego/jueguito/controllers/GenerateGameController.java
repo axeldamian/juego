@@ -48,6 +48,7 @@ public class GenerateGameController {
 
             StopWatch stopWatch = new StopWatch();
             stopWatch.start();
+            ////////////////////////////////////
    
              if ( boardSolution == null) { // save the matrix and not recalculate.
                boardSolution = new BoardSolution(matrix);
@@ -56,16 +57,20 @@ public class GenerateGameController {
              if ( boardSolution.getCalculatedSolutions().isEmpty() ) {
                Set<int[][]> solutions = boardSolution.getAllSolutions(); // algoritmo principal.
                boardSolution.setCalculateAllSolutions(solutions);
+               log.info("---" + solutions.size());
              }
+             /////////////////////////////////
    
              stopWatch.stop();
              double time = stopWatch.getTotalTime(TimeUnit.MILLISECONDS);
              String msg = String.format( "tiempo en calcular una solución %.2f ms", time );
              log.info(msg);
 
+             //////////////////////////////
+
              GameBoard gb = new GameBoard( boardSolution.getRandomSolution() );
    
-             return new ResponseEntity<>( gb.toString(), HttpStatus.OK);
+             return new ResponseEntity<>( gb.buildGameBoard(boardSolution).toString(), HttpStatus.OK);
         
 
 

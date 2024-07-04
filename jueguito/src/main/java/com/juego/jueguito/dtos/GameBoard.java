@@ -28,19 +28,31 @@ public class GameBoard {
     }
 
     public GameBoard(BoardSolution solution) {
-
         this.width = solution.getBoardWidth();
         this.height = solution.getBoardHeight();
-        this.board = new Symbol[solution.getBoardWidth()][solution.getBoardHeight()];
-        Symbol currentSymbol = Symbol.getRandomSymbol();
-        log.info("current symbol is " + currentSymbol );
+        this.board = new Symbol[width][height];
+    }
 
-        for ( int i = 0; i < width; i++ ) {
-            for ( int j = 0; j < height; j++ ) {
-                this.board[i][j] = currentSymbol;
-                currentSymbol = currentSymbol.getRandomNextSymbol();
+    public Response buildGameBoard(BoardSolution solution) {
+
+        Symbol currentSymbol = Symbol.getRandomSymbol();
+        boolean isInitial = false;
+        Response response = new Response();
+
+        for ( int i = 1; i <= 9; i++ ) {
+            Position positionFound = solution.searchByValue(i);
+
+            if ( i == 1 ) {
+                isInitial = true;
+            } else {
+                isInitial = false;
             }
+
+            response.addElement( positionFound , currentSymbol , isInitial );
+
+            currentSymbol = currentSymbol.getRandomNextSymbol();
         }
+        return response;
     }
 
     @Override
