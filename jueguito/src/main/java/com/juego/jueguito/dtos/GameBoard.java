@@ -1,13 +1,10 @@
 package com.juego.jueguito.dtos;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.juego.jueguito.enums.Symbol;
 
 public class GameBoard {
 
-    static Logger log = LogManager.getLogger(GameBoard.class);
+    //Logger log = LogManager.getLogger(GameBoard.class);
 
     private Symbol[][] board;
 
@@ -27,10 +24,13 @@ public class GameBoard {
         return this.height;
     }
 
-    public GameBoard(BoardSolution solution) {
-        this.width = solution.getBoardWidth();
-        this.height = solution.getBoardHeight();
+    public GameBoard(BoardSolution boardSolution) {
+        super();
+
+        this.width = boardSolution.getBoardWidth();
+        this.height = boardSolution.getBoardHeight();
         this.board = new Symbol[width][height];
+
     }
 
     public Response buildGameBoard(BoardSolution solution) {

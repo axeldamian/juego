@@ -182,8 +182,8 @@ public class BoardSolution {
                 }
             }
         }
-        return ( values.size() == ( this.getBoardWidth() * this.getBoardHeight() ) ) &&
-         this.matrixWithNextsValuesValid() && this.nextPossibilitiesIsOk();
+        return ( values.size() == ( this.getBoardWidth() * this.getBoardHeight() ) ) 
+        && this.matrixWithNextsValuesValid() && this.nextPossibilitiesIsOk();
     }
 
     private boolean matrixWithNextsValuesValid() {
@@ -222,7 +222,6 @@ public class BoardSolution {
             for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
                 Position pos = new Position(i, j);
                 result = result && currentPositionIsValid(pos);
-                
             }
         }
         return result;
@@ -294,7 +293,7 @@ public class BoardSolution {
     }
 
     private int getMaximunNumber() {
-        int max = 1;
+        int max = 0;
         for ( int i = 0; i < this.getBoardWidth(); i++ ) {
             for ( int j = 0; j < this.getBoardHeight(); j++ ) {
                 if ( this.board[ i ][ j ]  > max ) {
