@@ -18,5 +18,22 @@ public class Response {
             data[index] = new DataResponse(p, s, initial);
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("{ data: \n");
+        int cont = 1;
+        for ( DataResponse it : this.data ) {
+            str.append(it);
+            str.append(",");
+            if ( cont == 3 ) { // dinamico si el tamaño es variable
+                str.append("\n");
+                cont = 0;
+            }
+            cont++;
+        }
+        str.append("}");
+        return str.toString();
+    }
     
 }

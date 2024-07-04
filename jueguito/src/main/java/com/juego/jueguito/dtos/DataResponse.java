@@ -27,5 +27,15 @@ public class DataResponse {
     public boolean isInitial() {
         return this.initial;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("");
+        str.append(this.symbol.getId());
+            if ( this.initial ) {
+                str.append("_x");
+            }
+        return str.toString();
+    }
     
 }
