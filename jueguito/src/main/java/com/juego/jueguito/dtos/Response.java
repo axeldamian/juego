@@ -23,8 +23,8 @@ public class Response {
     public String toString() {
         StringBuilder str = new StringBuilder("{ data: \n");
         int cont = 1;
-        for ( DataResponse it : this.data ) {
-            str.append(it);
+        for ( int i = 0; i < 9; i++ ) {
+            str.append( this.data[i] );
             str.append(",");
             if ( cont == 3 ) { // dinamico si el tamaño es variable
                 str.append("\n");

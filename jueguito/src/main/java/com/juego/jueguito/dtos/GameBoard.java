@@ -1,10 +1,13 @@
 package com.juego.jueguito.dtos;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.juego.jueguito.enums.Symbol;
 
 public class GameBoard {
 
-    //Logger log = LogManager.getLogger(GameBoard.class);
+    static Logger log = LogManager.getLogger(GameBoard.class);
 
     private Symbol[][] board;
 
