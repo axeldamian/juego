@@ -63,14 +63,16 @@ public class GameBoard {
             currentSymbol = currentSymbol.getRandomNextSymbol();
         }
 
+        DataResponse[] data = response.getData();
+        log.info(data);
+
         for ( int x = 0; x < 9; x++ ) {
-            Position pos = response.getData()[x].getPosition();
-            if ( pos != null ) {
-                int i = pos.getPositionX();
-                int j = pos.getPositionY();
-                this.board[i][j] = response.getData()[x].getSymbol();
-            }
-            if ( x == 1 ) {
+            DataResponse item = data[x];
+            Position pos = item.getPosition();
+            int i = pos.getPositionX() - 1;
+            int j = pos.getPositionY() - 1;
+            this.board[i][j] = item.getSymbol();
+            if ( x == 0 ) {
                 this.initialPosition = pos;
             }
         }

@@ -77,7 +77,7 @@ public enum Symbol {
         Iterator<Symbol> symbols = getAllEnums().iterator();
         int cont = 1; // ver si es 0
         Symbol symbol = Symbol.CIRCLE_BLUE; // is random
-        int randomNumber = new Random().nextInt( 15 ); // ver si es 14
+        int randomNumber = new Random().nextInt( 15 ); // entre 0 y 14
 
         while ( symbols.hasNext() && cont <= randomNumber ) {
             symbol = symbols.next();
@@ -87,10 +87,9 @@ public enum Symbol {
     }
 
     public Symbol getRandomNextSymbol() {
-        Symbol symbolRandom = Symbol.getRandomSymbol();
-        Iterator<Symbol> nextPossibility = symbolRandom.getNextPossibilities().iterator();
-        Symbol nextSymbol = Symbol.TRIANGLE_RED;
-        int cardinalNextPossibilities = symbolRandom.getNextPossibilities().size();
+        Iterator<Symbol> nextPossibility = this.getNextPossibilities().iterator();
+        Symbol nextSymbol = Symbol.CIRCLE_BLUE;
+        int cardinalNextPossibilities = this.getNextPossibilities().size();
         
         int randomNumber = new Random().nextInt( cardinalNextPossibilities ); // ver si va -1
     

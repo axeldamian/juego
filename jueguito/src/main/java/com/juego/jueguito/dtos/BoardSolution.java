@@ -121,8 +121,7 @@ public class BoardSolution {
             for ( int j = 0; j < this.getBoardHeight(); j++ ) {
     
                 if ( this.board[i][j] == value ) {
-                    Position p = new Position(i , j);
-                    return p;
+                    return new Position( i + 1 , j + 1 );
                 }
 
             }
