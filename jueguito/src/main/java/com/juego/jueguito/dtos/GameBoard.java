@@ -60,7 +60,7 @@ public class GameBoard {
             currentSymbol = currentSymbol.getRandomNextSymbol();
         }
 
-        for ( int x = 1; x < 9; x++ ) {
+        for ( int x = 0; x < 9; x++ ) {
             Position pos = response.getData()[x].getPosition();
             if ( pos != null ) {
                 int i = pos.getPositionX();
