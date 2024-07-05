@@ -17,6 +17,8 @@ public class GameBoard {
 
     private Position initialPosition;
 
+    private int[][] solution;
+
     public Symbol[][] getBoard() {
         return this.board;
     }
@@ -35,6 +37,7 @@ public class GameBoard {
         this.width = boardSolution.getBoardWidth();
         this.height = boardSolution.getBoardHeight();
         this.board = new Symbol[width][height];
+        this.solution = boardSolution.getBoard();
 
     }
 
@@ -83,6 +86,13 @@ public class GameBoard {
             s = s.append("\n");
         }
         s = s.append("initial:" + this.initialPosition);
+        s = s.append("\n" + "solution:" + "\n");
+        for ( int i = 0; i < this.getWidth(); i++ ) {
+            for ( int j = 0; j < this.getHeight(); j++ ) {
+                s = s.append(this.solution[i][j] + " ");
+            }
+            s = s.append("\n");
+        }
         return s.toString();
     }
     
