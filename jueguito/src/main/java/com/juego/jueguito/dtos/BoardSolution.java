@@ -119,7 +119,7 @@ public class BoardSolution {
     public Position searchByValue( int value ) {
         for ( int i = 0; i < this.getBoardWidth(); i++ ) {
             for ( int j = 0; j < this.getBoardHeight(); j++ ) {
-
+    
                 if ( this.board[i][j] == value ) {
                     Position p = new Position(i , j);
                     return p;

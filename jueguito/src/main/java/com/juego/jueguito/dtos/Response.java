@@ -19,7 +19,8 @@ public class Response {
     public void addElement(Position p , Symbol s , boolean initial) {
         this.index = this.index + 1;
         if (this.index < 9) {
-            data[index] = new DataResponse(p, s, initial);
+            DataResponse dr = new DataResponse(p, s, initial);
+            data[index] = dr;
         }
     }
 
@@ -29,7 +30,7 @@ public class Response {
         int cont = 1;
         for ( int i = 0; i < 9; i++ ) {
             str.append( this.data[i] );
-            str.append(",");
+            str.append(" ");
             if ( cont == 3 ) { // dinamico si el tamaño es variable
                 str.append("\n");
                 cont = 0;

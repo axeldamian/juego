@@ -4,7 +4,7 @@ import com.juego.jueguito.enums.Symbol;
 
 public class DataResponse {
 
-    private Position position;
+    private Position position = new Position(0,0);
 
     private Symbol symbol;
 

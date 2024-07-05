@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class BoardSolutionTests {
 
     @Test
-    void testingHashCode() {
+    void testingPosition() {
 
         int[][] matrix = new int[3][3];
         matrix[2][1] = 7;

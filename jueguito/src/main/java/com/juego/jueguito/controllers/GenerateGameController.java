@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.juego.jueguito.dtos.BoardSolution;
 import com.juego.jueguito.dtos.GameBoard;
 import com.juego.jueguito.dtos.Request;
+import com.juego.jueguito.dtos.Response;
 import com.juego.jueguito.enums.Difficulty;
 import com.juego.jueguito.services.GameService;
 
@@ -69,8 +70,9 @@ public class GenerateGameController {
              //////////////////////////////
 
              GameBoard gb = new GameBoard( boardSolution.getRandomSolution() );
+             gb.buildGameBoard(boardSolution);
    
-             return new ResponseEntity<>( gb.buildGameBoard(boardSolution).toString(), HttpStatus.OK);
+             return new ResponseEntity<>( gb.toString(), HttpStatus.OK);
         }
 
         @GetMapping("/cardinal-solutions")

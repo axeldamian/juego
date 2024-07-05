@@ -38,14 +38,16 @@ public class GameBoard {
 
     }
 
-    public Response buildGameBoard(BoardSolution solution) {
+    public void buildGameBoard(BoardSolution solution) {
 
         Symbol currentSymbol = Symbol.getRandomSymbol();
         boolean isInitial = false;
         Response response = new Response();
 
+         BoardSolution boardSolution = solution.getRandomSolution();
+
         for ( int i = 1; i <= 9; i++ ) {
-            Position positionFound = solution.searchByValue(i);
+            Position positionFound = boardSolution.searchByValue(i);
 
             if ( i == 1 ) {
                 isInitial = true;
@@ -69,8 +71,6 @@ public class GameBoard {
                 this.initialPosition = pos;
             }
         }
-
-        return response;
     }
 
     @Override
