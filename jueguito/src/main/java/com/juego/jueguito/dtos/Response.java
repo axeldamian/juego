@@ -18,6 +18,8 @@ public class Response {
 
     public void addElement(Position p , Symbol s , boolean initial) {
         this.index = this.index + 1;
+        System.out.println(this.index);
+        System.out.println(p);
         if (this.index < 9) {
             DataResponse dr = new DataResponse(p, s, initial);
             data[index] = dr;

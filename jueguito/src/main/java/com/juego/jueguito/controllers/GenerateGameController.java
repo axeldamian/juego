@@ -20,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.juego.jueguito.dtos.BoardSolution;
 import com.juego.jueguito.dtos.GameBoard;
 import com.juego.jueguito.dtos.Request;
-import com.juego.jueguito.dtos.Response;
 import com.juego.jueguito.enums.Difficulty;
 import com.juego.jueguito.services.GameService;
 
@@ -58,7 +57,6 @@ public class GenerateGameController {
              if ( boardSolution.getCalculatedSolutions().isEmpty() ) {
                Set<int[][]> solutions = boardSolution.getAllSolutions(); // algoritmo principal.
                boardSolution.setCalculateAllSolutions(solutions);
-
              }
              /////////////////////////////////
    
@@ -68,9 +66,9 @@ public class GenerateGameController {
              log.info(msg);
 
              //////////////////////////////
-
-             GameBoard gb = new GameBoard( boardSolution.getRandomSolution() );
-             gb.buildGameBoard(boardSolution);
+              BoardSolution bs = boardSolution.getRandomSolution();
+              GameBoard gb = new GameBoard( bs );
+              gb.buildGameBoard(bs);
    
              return new ResponseEntity<>( gb.toString(), HttpStatus.OK);
         }

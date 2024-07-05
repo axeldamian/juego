@@ -41,16 +41,16 @@ public class GameBoard {
 
     }
 
-    public void buildGameBoard(BoardSolution solution) {
+    public void buildGameBoard(BoardSolution bs) {
 
         Symbol currentSymbol = Symbol.getRandomSymbol();
         boolean isInitial = false;
         Response response = new Response();
 
-         BoardSolution boardSolution = solution.getRandomSolution();
+         //BoardSolution boardSolution = solution.getRandomSolution();
 
         for ( int i = 1; i <= 9; i++ ) {
-            Position positionFound = boardSolution.searchByValue(i);
+            Position positionFound = bs.searchByValue(i);
 
             if ( i == 1 ) {
                 isInitial = true;
