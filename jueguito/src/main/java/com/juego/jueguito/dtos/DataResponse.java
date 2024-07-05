@@ -11,6 +11,7 @@ public class DataResponse {
     private boolean initial;
 
     public DataResponse( Position pos , Symbol s , boolean isInitial ) {
+        super();
         this.position = pos;
         this.symbol = s;
         this.initial = isInitial;

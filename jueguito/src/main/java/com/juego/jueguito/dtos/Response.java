@@ -4,12 +4,16 @@ import com.juego.jueguito.enums.Symbol;
 
 public class Response {
 
-    DataResponse[] data = new DataResponse[9];
+    DataResponse[] data = new DataResponse[9]; // depende del tamaño
 
     int index;
 
     public Response() {
         this.index = -1;
+    }
+
+    public DataResponse[] getData() {
+        return this.data;
     }
 
     public void addElement(Position p , Symbol s , boolean initial) {

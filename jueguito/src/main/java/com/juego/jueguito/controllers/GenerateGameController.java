@@ -57,7 +57,7 @@ public class GenerateGameController {
              if ( boardSolution.getCalculatedSolutions().isEmpty() ) {
                Set<int[][]> solutions = boardSolution.getAllSolutions(); // algoritmo principal.
                boardSolution.setCalculateAllSolutions(solutions);
-               log.info("---" + solutions.size());
+
              }
              /////////////////////////////////
    
@@ -71,11 +71,6 @@ public class GenerateGameController {
              GameBoard gb = new GameBoard( boardSolution.getRandomSolution() );
    
              return new ResponseEntity<>( gb.buildGameBoard(boardSolution).toString(), HttpStatus.OK);
-        
-
-
-            //BoardSolution board = new BoardSolution(GameService.APossibleSolution())
-            //board.getAllValidPositions();
         }
 
         @GetMapping("/cardinal-solutions")

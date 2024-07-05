@@ -54,6 +54,7 @@ public class Position {
 
     // validar que x e y son posiciones validas
     public Position(int posX, int posY) {
+        super();
         this.positionX = posX;
         this.positionY = posY;
     }
@@ -167,7 +168,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return " [" + this.positionX + "," + this.positionY + "] ";
+        return " (" + this.positionX + "," + this.positionY + ") ";
     }
 
     @Override

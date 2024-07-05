@@ -15,6 +15,8 @@ public class GameBoard {
 
     private int height;
 
+    private Position initialPosition;
+
     public Symbol[][] getBoard() {
         return this.board;
     }
@@ -55,6 +57,19 @@ public class GameBoard {
 
             currentSymbol = currentSymbol.getRandomNextSymbol();
         }
+
+        for ( int x = 1; x < 9; x++ ) {
+            Position pos = response.getData()[x].getPosition();
+            if ( pos != null ) {
+                int i = pos.getPositionX();
+                int j = pos.getPositionY();
+                this.board[i][j] = response.getData()[x].getSymbol();
+            }
+            if ( x == 1 ) {
+                this.initialPosition = pos;
+            }
+        }
+
         return response;
     }
 
@@ -67,6 +82,7 @@ public class GameBoard {
             }
             s = s.append("\n");
         }
+        s = s.append("initial:" + this.initialPosition);
         return s.toString();
     }
     
