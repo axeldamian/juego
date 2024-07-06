@@ -25,7 +25,7 @@ public class BoardSolution {
         this.board = cloneMatrix(board);
      }
 
-    public void setBoard( int[][] board) {
+    public void setBoard( int[][] board ) {
         this.board = cloneMatrix(board);
     }
 
@@ -131,9 +131,10 @@ public class BoardSolution {
 
     // TODO : ver el parametro matriz.
     private int[][] cloneMatrix( int[][] matrix ) {
-        int[][] newMatrix = new int[matrix[0].length][matrix.length];
-        for ( int i = 0; i < matrix[0].length; i++ ) {
-            for ( int j = 0; j < matrix.length; j++ ) {
+        int width = matrix[0].length;
+        int[][] newMatrix = new int[matrix.length][width];
+        for ( int i = 0; i < matrix.length; i++ ) {
+            for ( int j = 0; j < width; j++ ) {
                 newMatrix[i][j] = matrix[i][j];
             }
         }
