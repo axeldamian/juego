@@ -27,7 +27,7 @@ public class ResponseItemJson {
         return this.symbol;
     }
 
-    @JsonProperty("symbolito")
+    @JsonProperty("symbol_id")
     public String getSymbolId() {
         return this.symbol.getId();
     }
