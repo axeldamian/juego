@@ -43,8 +43,6 @@ public class GameBoard {
         boolean isInitial = false;
         Response response = new Response();
     
-             //BoardSolution boardSolution = solution.getRandomSolution();
-    
         for ( int i = 1; i <= 9; i++ ) {
             Position positionFound = boardSolution.searchByValue(i);
     
