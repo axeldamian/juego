@@ -6,6 +6,8 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Position {
 
     static Logger log = LogManager.getLogger(Position.class);
@@ -14,10 +16,12 @@ public class Position {
 
     private int positionY;
 
+    @JsonProperty("x")
     public int getPositionX() {
         return this.positionX;
     }
 
+    @JsonProperty("y")
     public int getPositionY() {
         return this.positionY;
     }

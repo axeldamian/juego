@@ -1,5 +1,6 @@
 package com.juego.jueguito.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.juego.jueguito.enums.Symbol;
 
 public class ResponseItemJson {
@@ -14,10 +15,13 @@ public class ResponseItemJson {
         this.symbol = s;
     }
 
+
+    @JsonProperty("position")
     public Position getPosition() {
         return this.position;
     }
 
+    @JsonProperty("symbol")
     public Symbol getSymbol() {
         return this.symbol;
     }
