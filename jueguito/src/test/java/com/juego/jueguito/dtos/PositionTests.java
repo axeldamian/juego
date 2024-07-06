@@ -44,4 +44,15 @@ public class PositionTests {
         assertTrue(result);
     }
 
+    @Test
+    void testingMax() {
+
+        int[][] matrix = new int[3][3];
+        matrix[2][2] = 9;
+
+        int max = Position.max(matrix);
+
+        assertEquals(9, max);
+    }
+
 }

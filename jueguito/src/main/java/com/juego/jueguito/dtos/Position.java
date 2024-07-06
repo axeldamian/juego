@@ -45,12 +45,13 @@ public class Position {
     }
 
     public static int max (int[][] matrix) {
-        int max = 0 ;
-        for ( int i = 0; i < matrix[i].length; i++ ) {
+        int max = 0;
+        int width = matrix[0].length;
+        for ( int i = 0; i < width; i++ ) {
             for ( int j = 0; j < matrix.length; j++ ) {
-             if ( matrix[i][j] > max) {
-                max = matrix[i][j];
-             }
+                if ( matrix[i][j] > max) {
+                    max = matrix[i][j];
+                }
             }
         }
         return max;
