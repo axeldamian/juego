@@ -64,7 +64,6 @@ public class GameBoard {
         }
 
         DataResponse[] data = response.getData();
-        log.info(data);
 
         for ( int x = 0; x < 9; x++ ) {
             DataResponse item = data[x];
@@ -76,6 +75,11 @@ public class GameBoard {
                 this.initialPosition = pos;
             }
         }
+    }
+
+    public ResponseJson toJson() {
+        ResponseJson response = new ResponseJson( this.getBoard() , this.initialPosition);
+        return response;
     }
 
     @Override

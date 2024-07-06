@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.juego.jueguito.dtos.BoardSolution;
 import com.juego.jueguito.dtos.GameBoard;
 import com.juego.jueguito.dtos.Request;
+import com.juego.jueguito.dtos.ResponseJson;
 import com.juego.jueguito.enums.Difficulty;
 import com.juego.jueguito.services.GameService;
 
@@ -34,7 +35,7 @@ public class GenerateGameController {
     BoardSolution boardSolution;
 
     @GetMapping("/generate")
-    public ResponseEntity<String> generate() throws ResponseStatusException, CloneNotSupportedException {
+    public ResponseEntity<ResponseJson> generate() throws ResponseStatusException, CloneNotSupportedException {
        
             log.info("call to endpoint /generate");
 
@@ -69,8 +70,10 @@ public class GenerateGameController {
               BoardSolution bs = boardSolution.getRandomSolution();
               GameBoard gb = new GameBoard( bs );
               gb.buildGameBoard(bs);
+
+              log.info( gb.toString() );
    
-             return new ResponseEntity<>( gb.toString(), HttpStatus.OK);
+             return new ResponseEntity<>( gb.toJson() , HttpStatus.OK);
         }
 
         @GetMapping("/cardinal-solutions")
