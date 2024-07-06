@@ -17,7 +17,7 @@ public class ResponseJson {
         for( int i = 0; i < this.matrixResponse[0].length; i++) {
             for ( int j = 0; j < this.matrixResponse.length; j++ ) {
                 Position p = new Position( i + 1 , j + 1 );
-                ResponseItemJson item = new ResponseItemJson( p , this.matrixResponse[i][j]);
+                ResponseItemJson item = new ResponseItemJson( p , this.matrixResponse[i][j] );
                 response[ 3 * i + j ] = item;
             }
         }

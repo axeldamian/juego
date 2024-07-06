@@ -10,10 +10,10 @@ public class DataResponse {
 
     private boolean initial;
 
-    public DataResponse( Position pos , Symbol s , boolean isInitial ) {
+    public DataResponse( Position pos , Symbol symbolId , boolean isInitial ) {
         super();
         this.position = pos;
-        this.symbol = s;
+        this.symbol = symbolId;
         this.initial = isInitial;
     }
 
@@ -32,9 +32,9 @@ public class DataResponse {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("");
-        str.append(this.symbol.getId());
+        str.append(this.symbol);
             if ( this.initial ) {
-                str.append("_x");
+                str.append("_x"); // is the start point.
             }
         return str.toString();
     }

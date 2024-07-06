@@ -16,10 +16,10 @@ public class Response {
         return this.data;
     }
 
-    public void addElement(Position p , Symbol s , boolean initial) {
+    public void addElement(Position p , Symbol symbolId , boolean initial) {
         this.index = this.index + 1;
         if (this.index < 9) {
-            DataResponse dr = new DataResponse(p, s, initial);
+            DataResponse dr = new DataResponse(p, symbolId, initial);
             data[index] = dr;
         }
     }

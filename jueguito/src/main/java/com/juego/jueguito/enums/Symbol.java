@@ -33,7 +33,7 @@ public enum Symbol {
     private Shape shape;
 
     public String getId() {
-        return this.shape + "_" + this.color;
+        return this.shape.getId() + "_" + this.color.getId();
     }
 
     public Color getColor() {

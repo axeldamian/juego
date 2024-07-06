@@ -1,5 +1,6 @@
 package com.juego.jueguito.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.juego.jueguito.enums.Symbol;
 
@@ -21,9 +22,14 @@ public class ResponseItemJson {
         return this.position;
     }
 
-    @JsonProperty("symbol")
+    @JsonIgnore
     public Symbol getSymbol() {
         return this.symbol;
+    }
+
+    @JsonProperty("symbolito")
+    public String getSymbolId() {
+        return this.symbol.getId();
     }
 
 }
