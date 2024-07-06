@@ -69,7 +69,6 @@ public class GenerateGameController {
              //////////////////////////////
               BoardSolution bs = boardSolution.getRandomSolution();
               GameBoard gb = new GameBoard( bs );
-              gb.buildGameBoard(bs);
 
               log.info( gb.toString() );
    

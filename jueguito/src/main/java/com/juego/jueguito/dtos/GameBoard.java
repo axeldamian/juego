@@ -39,42 +39,41 @@ public class GameBoard {
         this.board = new Symbol[width][height];
         this.solution = boardSolution.getBoard();
 
-    }
-
-    public void buildGameBoard(BoardSolution bs) {
-
         Symbol currentSymbol = Symbol.getRandomSymbol();
         boolean isInitial = false;
         Response response = new Response();
-
-         //BoardSolution boardSolution = solution.getRandomSolution();
-
+    
+             //BoardSolution boardSolution = solution.getRandomSolution();
+    
         for ( int i = 1; i <= 9; i++ ) {
-            Position positionFound = bs.searchByValue(i);
-
+            Position positionFound = boardSolution.searchByValue(i);
+    
             if ( i == 1 ) {
                 isInitial = true;
             } else {
                 isInitial = false;
             }
-
+    
             response.addElement( positionFound , currentSymbol , isInitial );
-
+    
             currentSymbol = currentSymbol.getRandomNextSymbol();
         }
-
+    
         DataResponse[] data = response.getData();
-
+    
         for ( int x = 0; x < 9; x++ ) {
             DataResponse item = data[x];
             Position pos = item.getPosition();
             int i = pos.getPositionX() - 1;
             int j = pos.getPositionY() - 1;
             this.board[i][j] = item.getSymbol();
+
             if ( x == 0 ) {
-                this.initialPosition = pos;
+                    this.initialPosition = pos;
             }
+            
         }
+
     }
 
     public ResponseJson toJson() {

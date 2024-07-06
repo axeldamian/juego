@@ -10,4 +10,9 @@ class JueguitoApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+    void applicationContextTest() {
+        JueguitoApplication.main(new String[] {});
+    }
+
 }
