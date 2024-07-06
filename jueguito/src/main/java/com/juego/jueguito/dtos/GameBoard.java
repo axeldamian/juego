@@ -84,7 +84,7 @@ public class GameBoard {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder("");
+        StringBuilder s = new StringBuilder("\n");
         for ( int i = 0; i < this.getWidth(); i++ ) {
             for ( int j = 0; j < this.getHeight(); j++ ) {
                 s = s.append(" " + this.getBoard()[i][j] );
