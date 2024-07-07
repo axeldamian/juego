@@ -2,6 +2,9 @@ package com.juego.jueguito.enums;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -123,5 +126,48 @@ class SymbolTests {
          assertEquals( "triangle" , s.getShape().getId() );
 
 	}
+
+    @Test
+    void cardinalEnums() {
+        Set<Symbol> symbols = Symbol.getAllEnums();
+
+        assertEquals( 15 , symbols.size());
+    }
+
+    @Test
+    void testingId() { 
+        Symbol s = Symbol.CIRCLE_BLUE;
+        assertEquals( "circle_blue" , s.getId() );
+    }
+
+    @Test
+    void testingNextSymbol(){
+        Symbol s = Symbol.CIRCLE_BLUE;
+        Set<Symbol> symbolsNext = s.getNextPossibilities();
+        Set<Symbol> symbols = new HashSet<>();
+        symbols.add(Symbol.CIRCLE_BLUE);
+        symbols.add(Symbol.CIRCLE_PINK);
+        symbols.add(Symbol.CIRCLE_RED);
+        symbols.add(Symbol.CIRCLE_VIOLET);
+        symbols.add(Symbol.CIRCLE_YELLOW);
+        symbols.add(Symbol.SQUARE_BLUE);
+        symbols.add(Symbol.TRIANGLE_BLUE);
+
+        assertEquals(symbols , symbolsNext);
+    }
+
+    @Test
+    void testingNextPossibility() {
+        Symbol s = Symbol.CIRCLE_BLUE;
+        assertTrue( s.getNextPossibilities().contains( s.getRandomNextSymbol() ) );
+        Symbol randomSymbol = s.getRandomNextSymbol();
+        assertNotNull( randomSymbol );
+    }
+
+    @Test
+    void testingRandomSymbol() {
+        Set<Symbol> symbols = Symbol.getAllEnums();
+        assertTrue( symbols.contains( Symbol.getRandomSymbol() ) );
+    }
     
 }
