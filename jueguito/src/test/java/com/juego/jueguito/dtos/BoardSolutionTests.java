@@ -40,5 +40,34 @@ class BoardSolutionTests {
         assertFalse( boardSolution.isSquare() );
         assertTrue(  boardSolution.isRectangle() );
     }
+
+    @Test
+    void testingAboutDimensions() {
+        int[][] matrix = new int[3][3];
+        matrix[2][2] = 9;
+
+        BoardSolution boardSolution = new BoardSolution(matrix);
+        
+        assertEquals( 3 , boardSolution.getBoardHeight() );
+        assertEquals( 3 , boardSolution.getBoardHeight() );
+
+        int[][] newMatrix = new int[ matrix.length ][ matrix[0].length ];
+        newMatrix[2][2] = matrix[2][2];
+
+        assertEquals( newMatrix[2][2] , boardSolution.getBoard()[2][2] );
+    }
+
+    @Test
+    void testingAboutCurrentPosition() {
+        int[][] matrix = new int[3][3];
+        matrix[2][1] = 5;
+
+        BoardSolution boardSolution = new BoardSolution(matrix);
+
+        boardSolution.setCurrentPosition( 2 + 1 , 1 + 1 );
+
+        assertEquals(3 , boardSolution.getCurrentPositionWidth() );
+        assertEquals(2 , boardSolution.getCurrentPositionHeight() );
+    }
     
 }
