@@ -255,7 +255,7 @@ public class BoardSolution {
         return set.size();
     }
 
-    private boolean checkValidSolution() {
+    public boolean checkValidSolution() {
         return this.isComplete() && this.isSolution();
     }
 
@@ -290,11 +290,11 @@ public class BoardSolution {
         }
     }
 
-    private void setNextIncrementalValue() {
+    public void setNextIncrementalValue() {
         this.setValue( getMaximunNumber() + 1 );
     }
 
-    private int getMaximunNumber() {
+    public int getMaximunNumber() {
         int max = 0;
         for ( int i = 0; i < this.getBoardWidth(); i++ ) {
             for ( int j = 0; j < this.getBoardHeight(); j++ ) {

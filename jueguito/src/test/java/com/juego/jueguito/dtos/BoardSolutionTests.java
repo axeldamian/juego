@@ -2,6 +2,8 @@ package com.juego.jueguito.dtos;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -65,9 +67,26 @@ class BoardSolutionTests {
         BoardSolution boardSolution = new BoardSolution(matrix);
 
         boardSolution.setCurrentPosition( 2 + 1 , 1 + 1 );
+        boardSolution.setNextIncrementalValue();
 
         assertEquals(3 , boardSolution.getCurrentPositionWidth() );
         assertEquals(2 , boardSolution.getCurrentPositionHeight() );
+        assertEquals( 6 , boardSolution.value(3 , 2) );
+    }
+
+    @Test
+    void testingSolution() throws CloneNotSupportedException {
+        int[][] matrix = new int[3][3];
+        BoardSolution boardSolution = new BoardSolution(matrix);
+
+        if ( boardSolution.getCalculatedSolutions().isEmpty() ) {
+            Set<int[][]> solutions = boardSolution.getAllSolutions(); // algoritmo principal.
+            boardSolution.setCalculateAllSolutions(solutions);
+        }
+
+        BoardSolution newBoardSolution = boardSolution.getRandomSolution();
+
+        assertTrue( newBoardSolution.checkValidSolution() );
     }
     
 }
