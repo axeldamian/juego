@@ -2,6 +2,8 @@ package com.juego.jueguito.dtos;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Dimension;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -68,7 +70,9 @@ class BoardSolutionTests {
 
         boardSolution.setCurrentPosition( 2 + 1 , 1 + 1 );
         boardSolution.setNextIncrementalValue();
+        Dimension dimensions = new Dimension( 3 , 2 );
 
+        assertEquals( dimensions , boardSolution.getCurrentPosition()) ;
         assertEquals(3 , boardSolution.getCurrentPositionWidth() );
         assertEquals(2 , boardSolution.getCurrentPositionHeight() );
         assertEquals( 6 , boardSolution.value(3 , 2) );
@@ -101,6 +105,72 @@ class BoardSolutionTests {
         assertTrue( boardSolution.currentValueIsZero() );
         assertEquals( 20 , boardSolution.getMaximunNumber() );
         assertEquals( 9 , boardSolution.getValueMaxAllowed() );
+    }
+
+    @Test
+    void testingToString() {
+        int[][] matrix = new int[3][3];
+        BoardSolution bs = new BoardSolution(matrix);
+
+        StringBuilder sb = new StringBuilder("");
+
+        sb.append("\n");
+        sb.append(" ");
+        sb.append("0");
+        sb.append(" ");
+        sb.append("0");
+        sb.append(" ");
+        sb.append("0");
+        sb.append("\n");
+
+        sb.append(" ");
+        sb.append("0");
+        sb.append(" ");
+        sb.append("0");
+        sb.append(" ");
+        sb.append("0");
+        sb.append("\n");
+
+        sb.append(" ");
+        sb.append("0");
+        sb.append(" ");
+        sb.append("0");
+        sb.append(" ");
+        sb.append("0");
+        sb.append("\n");
+
+        assertEquals( sb.toString() , bs.toString() );
+    }
+
+
+    @Test
+    void testingThatIsNotSolution() {
+        int[][] matrix = new int[3][3];
+        BoardSolution bs = new BoardSolution(matrix);
+
+        assertFalse( bs.isSolution() );
+    }
+
+    @Test
+    void testingAllValidPositions() {
+        int[][] matrix = new int[3][3];
+        BoardSolution bs = new BoardSolution(matrix);
+
+        HashSet<Position> set = new HashSet<>();
+        set.add(new Position(1, 1));
+        set.add(new Position(1, 2));
+        set.add(new Position(1, 3));
+
+        set.add(new Position(2, 1));
+        set.add(new Position(2, 2));
+        set.add(new Position(2, 3));
+
+        set.add(new Position(3, 1));
+        set.add(new Position(3, 2));
+        set.add(new Position(3, 3));
+
+        assertEquals( set, bs.getAllValidPositions() );
+
     }
     
 }
