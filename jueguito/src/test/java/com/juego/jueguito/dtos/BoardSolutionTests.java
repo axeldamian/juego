@@ -88,5 +88,19 @@ class BoardSolutionTests {
 
         assertTrue( newBoardSolution.checkValidSolution() );
     }
+
+    @Test
+    void testingMatrixInvalid() {
+        int[][] matrix = new int[3][3];
+        matrix[2][2] = 20;
+
+        BoardSolution boardSolution = new BoardSolution(matrix);
+
+        boardSolution.setCurrentPosition(1, 1);
+
+        assertTrue( boardSolution.currentValueIsZero() );
+        assertEquals( 20 , boardSolution.getMaximunNumber() );
+        assertEquals( 9 , boardSolution.getValueMaxAllowed() );
+    }
     
 }

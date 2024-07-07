@@ -112,7 +112,7 @@ public class BoardSolution {
         return ( this.getBoardHeight() != this.getBoardWidth() );
     }
 
-    public int valueMax() {
+    public int getValueMaxAllowed() {
         return this.getBoardHeight() * getBoardWidth();
     }
 
@@ -189,12 +189,9 @@ public class BoardSolution {
     }
 
     private boolean matrixWithNextsValuesValid() {
-        //Dimension currentPosition = this.getCurrentPosition();
 
         for ( int i = 1; i <= this.getBoardWidth(); i++ ) {
             for ( int j = 1; j <= this.getBoardHeight(); j++ ) {
-
-                //this.setCurrentPosition(i, j);
 
                 boolean predicated = ( this.getBoard()[i - 1][j - 1] == 0 ) || ( this.getBoard()[i - 1][j - 1] > 9 ); //|| nextValue(i,j) == ( this.getBoard()[i][j] + 1  );
 
@@ -203,8 +200,6 @@ public class BoardSolution {
                 }
             }
         }
-
-        //this.setCurrentPosition( (int) currentPosition.getWidth() , (int) currentPosition.getHeight());
         return true;
     }
 
