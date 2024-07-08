@@ -163,15 +163,6 @@ public class BoardSolution {
         return set;
     }
 
-    public void fillMatrix(int[][] matrix) {
-        for ( int i = 0; i < this.getBoardWidth(); i++ ) {
-            for ( int j = 0; j < this.getBoardHeight(); j++ ) {
-                // Arrays.copyOf(matrix[i] , matrix[i].lenght);
-                this.board[i][j] = matrix[i][j];
-            }
-        }
-    }
-
     public boolean isSolution() {
 
         Set<Integer> values = this.possibleSolutionsValues();
@@ -205,7 +196,7 @@ public class BoardSolution {
 
     private int nextValue( int currentWidth , int currentHeight) {
 
-        int currentValue = this.board[currentWidth][currentHeight];
+        int currentValue = this.value(currentWidth, currentHeight);
 
        if ( 0 <= currentValue && currentValue < 9 ) {
         return currentValue + 1;

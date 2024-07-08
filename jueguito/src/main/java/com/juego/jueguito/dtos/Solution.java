@@ -1,6 +1,7 @@
 package com.juego.jueguito.dtos;
 
 public class Solution {
+
     private int a11;
 
     private int a12;
@@ -66,38 +67,6 @@ public class Solution {
 
     public int getA33() {
         return a33;
-    }
-
-    public void setA11(int a11) {
-        this.a11 = a11;
-    }
-
-    public void setA12(int a12) {
-        this.a12 = a12;
-    }
-
-    public void setA13(int a13) {
-        this.a13 = a13;
-    }
-
-    public void setA21(int a21) {
-        this.a21 = a21;
-    }
-
-    public void setA23(int a23) {
-        this.a23 = a23;
-    }
-
-    public void setA31(int a31) {
-        this.a31 = a31;
-    }
-
-    public void setA32(int a32) {
-        this.a32 = a32;
-    }
-
-    public void setA33(int a33) {
-        this.a33 = a33;
     }
 
 }
