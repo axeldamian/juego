@@ -5,7 +5,7 @@ import com.juego.jueguito.enums.Symbol;
 
 public class ResponseJson {
 
-    private ResponseItemJson[] response = new ResponseItemJson[9];
+    private ResponseItemJson[] dashboard = new ResponseItemJson[9];
     
     private Symbol[][] matrixResponse;
 
@@ -18,7 +18,7 @@ public class ResponseJson {
             for ( int j = 0; j < this.matrixResponse.length; j++ ) {
                 Position p = new Position( i + 1 , j + 1 );
                 ResponseItemJson item = new ResponseItemJson( p , this.matrixResponse[i][j] );
-                response[ 3 * i + j ] = item;
+                dashboard[ 3 * i + j ] = item;
             }
         }
     }
@@ -28,8 +28,8 @@ public class ResponseJson {
             return this.initialPosition;
         }
 
-        public ResponseItemJson[] getResponse() {
-            return this.response;
+        public ResponseItemJson[] getDashboard() {
+            return this.dashboard;
         }
 
 }

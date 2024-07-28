@@ -30,7 +30,7 @@ class GameBoardTests {
         BoardSolution newBoardSolution = boardSolution.getRandomSolution();
         GameBoard gameBoard = new GameBoard( newBoardSolution );
 
-        assertEquals(9 , gameBoard.toJson().getResponse().length );
+        assertEquals(9 , gameBoard.toJson().getDashboard().length );
     }
     
 }
